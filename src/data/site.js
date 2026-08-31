@@ -38,10 +38,10 @@ export const SLIDES = [
   },
   {
     eyebrow: 'Каталог',
-    title: 'Аппараты шести производителей',
-    text: 'ReSound, Phonak, Oticon, «Исток-Аудио», Signia (Siemens), Widex — заушные, внутриушные и внутриканальные модели от 7 890 ₽.',
+    title: 'Аппараты производителей',
+    text: 'ReSound, Phonak, Oticon, Исток-Аудио, Signia (Siemens), Widex — заушные, внутриушные и внутриканальные модели.',
     text2: 'Точную модель подбирает сурдолог после теста слуха: смотрим на степень снижения слуха, образ жизни и бюджет.',
-    note: 'от 7 890 ₽',
+    note: '',
     cta: 'Смотреть каталог',
     cover: '/img/Audifon-Arriva-CIC.webp',
     fit: 'contain',   // пара аппаратов: снимок горизонтальный и вписывается целиком
@@ -55,14 +55,16 @@ export const SLIDES = [
     cta: 'Вызвать специалиста',
     cover: '/photo/care.webp',
   },
-]
-
-/* Плитка быстрых ссылок под слайдером */
-export const TILES = [
-  { icon: 'ear', label: 'Слуховые аппараты', to: '/catalog' },
-  { icon: 'wave', label: 'Услуги и цены', to: '/catalog?cat=services' },
-  { icon: 'home', label: 'Выезд на дом', to: '/promo/vyezd-na-dom' },
-  { icon: 'pin', label: 'Адреса центров', to: '/locations' },
+  {
+    eyebrow: 'СФР',
+    title: 'Слуховые аппараты по электронному сертификату СФР и другие средства реабилитации',
+    text: 'Есть возможность приобрести слуховые аппараты по электронному сертификату СФР и другие средства реабилитации.',
+    text2: '',
+    note: '',
+    cta: 'Записаться',
+    cover: '/img/mir-card.png',
+    fit: 'contain',
+  },
 ]
 
 /* Быстрый подбор */

@@ -21,7 +21,7 @@ export default function Footer() {
               {SITE.name}<small style={{ color: 'rgba(255,255,255,.6)' }}>{SITE.tagline}</small>
             </span>
           </div>
-          <p className="ftr__about">Проверяем слух, подбираем и настраиваем слуховые аппараты. Центр в Краснодаре, выезд на дом по краю и Адыгее.</p>
+          <p className="ftr__about">Проверяем слух, подбираем и настраиваем слуховые аппараты. Центр в Краснодаре, выезд на дом по Краснодарскому краю и Адыгее.</p>
           <button className="btn btn-light btn-sm" onClick={() => openForm('call')}>Заказать звонок</button>
         </div>
 

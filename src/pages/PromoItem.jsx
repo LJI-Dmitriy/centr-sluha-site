@@ -14,7 +14,7 @@ import './Sections.css'
    Блоки текста приходят из данных: {h} заголовок, {p} абзац, {list} список,
    {note} сноска мелким шрифтом. */
 export default function PromoItem() {
-  const { PROMOS, SITE } = useContent()
+  const { PROMOS } = useContent()
   const { slug } = useParams()
   const promo = PROMOS.find((p) => p.slug === slug)
   if (!promo) return <NotFound />
@@ -60,12 +60,11 @@ export default function PromoItem() {
             <span className="eyebrow">Запись</span>
             <h2 style={{ margin: '14px 0 16px' }}>Оставьте заявку</h2>
             <p className="lead">
-              Перезвоним в рабочее время, ответим на вопросы и согласуем день приёма.
-              Можно и просто позвонить: {SITE.phone}.
+              Ответим на все интересующие вас вопросы и согласуем дату и время приёма.
             </p>
             <ul className="form-split__list">
               <li><Icon name="check" size={16} /> Тест слуха и подбор — бесплатно</li>
-              <li><Icon name="check" size={16} /> Выезд специалиста на дом по краю и Адыгее</li>
+              <li><Icon name="check" size={16} /> Выезд специалиста на дом по Краснодарскому краю и Адыгее</li>
               <li><Icon name="check" size={16} /> Оплата электронным сертификатом СФР</li>
             </ul>
           </Reveal>

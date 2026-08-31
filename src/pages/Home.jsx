@@ -9,9 +9,8 @@ import Messengers from '../components/Messengers'
 import RequestForm from '../components/RequestForm'
 import Seo from '../components/Seo'
 import { useRequestForm } from '../components/RequestModal'
-import Faq from '../components/Faq'
 import { useContent } from '../components/ContentContext'
-import { OFFERS, PICKER, CATEGORIES, BRANDS, ADVANTAGES, STEPS, STATS, FAQ } from '../data/site'
+import { OFFERS, PICKER, CATEGORIES, BRANDS } from '../data/site'
 import './Pages.css'
 import './Sections.css'
 
@@ -19,7 +18,7 @@ import './Sections.css'
    аппараты с ценами, услуги с ценами и адрес. Подробности о центре,
    акции и статьи живут на своих страницах. */
 export default function Home() {
-  const { SITE, LINKS, CATALOG, HOME_PRODUCTS, SERVICES, CENTERS, PROMOS } = useContent()
+  const { SITE, LINKS, CATALOG, HOME_PRODUCTS, CENTERS, PROMOS } = useContent()
   const openForm = useRequestForm()
   const main = CENTERS[0]
   const products = (HOME_PRODUCTS.length ? HOME_PRODUCTS : CATALOG).slice(0, 4)
@@ -43,25 +42,6 @@ export default function Home() {
               <span className="offer__note">{o.note}</span>
             </button>
           ))}
-        </div>
-      </section>
-
-      {/* БЫСТРЫЙ ПОДБОР — разделы каталога одной строкой */}
-      <section className="section section--tight" style={{ paddingTop: 24, paddingBottom: 'clamp(32px, 4vw, 52px)' }}>
-        <div className="container picker">
-          <div>
-            <span className="eyebrow">Каталог</span>
-            <h2>С чего начнём подбор?</h2>
-          </div>
-          <div className="cat-chips">
-            {CATEGORIES.map((c) => (
-              <Link key={c.slug} to={`/catalog?cat=${c.slug}`} className="chip">{c.title} <small>{c.count}</small></Link>
-            ))}
-            {PICKER.slice(0, 3).map((p, i) => (
-              <Link key={i} to={`/catalog?cat=${p.cat}`} className="chip">{p.label}</Link>
-            ))}
-            <Link to="/catalog" className="chip chip--all">Весь каталог <Icon name="arrow" size={15} /></Link>
-          </div>
         </div>
       </section>
 
@@ -100,6 +80,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* БЫСТРЫЙ ПОДБОР — разделы каталога одной строкой */}
+      <section className="section section--tight" style={{ paddingTop: 24, paddingBottom: 'clamp(32px, 4vw, 52px)' }}>
+        <div className="container picker">
+          <div>
+            <span className="eyebrow">Каталог</span>
+            <h2>С чего начнём подбор?</h2>
+          </div>
+          <div className="cat-chips">
+            {CATEGORIES.map((c) => (
+              <Link key={c.slug} to={`/catalog?cat=${c.slug}`} className="chip">{c.title} <small>{c.count}</small></Link>
+            ))}
+            {PICKER.slice(0, 3).map((p, i) => (
+              <Link key={i} to={`/catalog?cat=${p.cat}`} className="chip">{p.label}</Link>
+            ))}
+            <Link to="/catalog" className="chip chip--all">Весь каталог <Icon name="arrow" size={15} /></Link>
+          </div>
+        </div>
+      </section>
+
       {/* АППАРАТЫ */}
       <section className="section section--sand">
         <div className="container">
@@ -116,84 +115,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* УСЛУГИ */}
-      <section className="section">
-        <div className="container">
-          <Reveal className="head-row">
-            <div className="section-head" style={{ marginBottom: 0 }}>
-              <span className="eyebrow">Услуги</span>
-              <h2>Сколько стоит приём</h2>
-            </div>
-            <Link to="/catalog?cat=services" className="link-more">Все услуги <Icon name="arrow" size={18} /></Link>
-          </Reveal>
-          <div className="grid grid-3 grid--swipe">
-            {SERVICES.slice(0, 3).map((sv, i) => (
-              <div className="srv" key={i}>
-                <span className="srv__ic"><Icon name={sv.icon || 'wave'} size={24} /></span>
-                <div className="srv__body">
-                  <h3>{sv.title}</h3>
-                  <p>{sv.text}</p>
-                </div>
-                <div className="srv__foot">
-                  <strong>{sv.price}</strong>
-                  <button className="btn btn-ghost btn-sm" onClick={() => openForm('visit')}>Записаться</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* БРЕНДЫ */}
       <section className="section section--tight" style={{ paddingTop: 0 }}>
         <div className="container">
           <Reveal className="brands">
             {BRANDS.map((b) => <span key={b} className="brands__logo">{b}</span>)}
           </Reveal>
-        </div>
-      </section>
-
-      {/* ЦИФРЫ */}
-      <section className="stats">
-        <div className="container stats__grid">
-          {STATS.map((s, i) => (
-            <Reveal className="stats__item" key={i}>
-              <div className="stats__value">{s.value}<span>{s.suffix}</span></div>
-              <div className="stats__label">{s.label}</div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* КАК МЫ РАБОТАЕМ — преимущества и этапы приёма */}
-      <section className="section">
-        <div className="container">
-          <Reveal className="head-row">
-            <div className="section-head" style={{ marginBottom: 0 }}>
-              <span className="eyebrow">Почему к нам</span>
-              <h2>Как мы работаем</h2>
-            </div>
-            <button className="link-more" onClick={() => openForm('ask')}>Задать вопрос <Icon name="arrow" size={18} /></button>
-          </Reveal>
-          <div className="adv__grid">
-            {ADVANTAGES.map((a, i) => (
-              <Reveal className="adv__item" key={i} delay={i * 60}>
-                <span className="adv__ic"><Icon name={a.icon} size={22} /></span>
-                <h3>{a.title}</h3>
-                <p>{a.text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        <div className="container steps">
-          {STEPS.map((s, i) => (
-            <Reveal className="step" key={i} delay={i * 60}>
-              <span className="step__n">{s.n}</span>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </Reveal>
-          ))}
         </div>
       </section>
 
@@ -209,7 +136,7 @@ export default function Home() {
             </p>
             <ul className="form-split__list">
               <li><Icon name="check" size={16} /> Тест слуха и подбор — бесплатно</li>
-              <li><Icon name="check" size={16} /> Выезд специалиста на дом по краю и Адыгее</li>
+              <li><Icon name="check" size={16} /> Выезд специалиста на дом по Краснодарскому краю и Адыгее</li>
               <li><Icon name="check" size={16} /> Оплата электронным сертификатом СФР</li>
             </ul>
           </Reveal>
@@ -220,20 +147,6 @@ export default function Home() {
             </div>
             <RequestForm variant="visit" />
           </Reveal>
-        </div>
-      </section>
-
-      {/* ВОПРОСЫ — снимаем страх перед первым визитом */}
-      <section className="section">
-        <div className="container">
-          <Reveal className="head-row">
-            <div className="section-head" style={{ marginBottom: 0 }}>
-              <span className="eyebrow">Частые вопросы</span>
-              <h2>Отвечаем коротко</h2>
-            </div>
-            <Link to="/about" className="link-more">Все ответы <Icon name="arrow" size={18} /></Link>
-          </Reveal>
-          <Reveal><Faq items={FAQ.slice(0, 4)} /></Reveal>
         </div>
       </section>
 

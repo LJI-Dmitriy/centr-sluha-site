@@ -162,12 +162,6 @@ export default function RequestForm({ variant = 'visit', subject, id, items }) {
       <button type="submit" className="btn btn-primary btn-block" disabled={sending}>
         {sending ? 'Отправляем…' : v.submit} <Icon name="arrow" size={18} />
       </button>
-
-      {/* Человек должен понимать, что будет дальше: кто позвонит, когда и чем это его обязывает */}
-      <p className="rform__after">
-        После заявки дождитесь подтверждения по телефону — перезвоним в рабочее время.
-        Запись ничего не стоит и ни к чему не обязывает.
-      </p>
     </form>
   )
 }
