@@ -60,7 +60,7 @@ export default function Home() {
                 <article className="promo">
                   <div className="promo__media">
                     <Ph ratio="16 / 9" src={p.cover} alt={p.title} fit="cover" />
-                    <span className="promo__badge">{p.note}</span>
+                    {p.note && <span className="promo__badge">{p.note}</span>}
                   </div>
                   <div className="promo__body">
                     <h3>{p.title}</h3>

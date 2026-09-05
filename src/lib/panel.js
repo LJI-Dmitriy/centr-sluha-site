@@ -39,13 +39,20 @@ const toList = (value) => {
   }
 }
 
-const toSpecs = (rows) =>
-  toList(rows)
-    .map((row) => {
-      const [k, ...rest] = String(row).split(':')
-      return { k: k.trim(), v: rest.join(':').trim() }
-    })
-    .filter((s) => s.k && s.v)
+const NO_DATA = 'нет данных'
+
+/* Пять полей карточки аппарата. У аксессуаров и услуг их не заполняют —
+   тогда блок не показываем и остаются обычные пункты. */
+const toAttrs = (p) => {
+  if (!p.brand && !p.form && !p.power && !p.channels) return null
+  return {
+    brand: p.brand || NO_DATA,
+    form: p.form || NO_DATA,
+    power: p.power || NO_DATA,
+    signal: p.signal || 'Цифровой',
+    channels: p.channels || NO_DATA,
+  }
+}
 
 const toProduct = (p) => ({
   slug: p.slug,
@@ -58,9 +65,10 @@ const toProduct = (p) => ({
   short: p.short || '',
   img: fileUrl(p.image) || BUILTIN_IMAGES.get(p.slug) || null,
   points: toList(p.points),
-  specs: toSpecs(p.specs),
+  specs: toList(p.specs),
+  functions: toList(p.functions),
+  attrs: toAttrs(p),
   desc: (p.description || '').split('\n\n').filter(Boolean),
-  terms: [],
   unit: 'шт',
   stock: p.stock,
   onHome: !!p.on_home,

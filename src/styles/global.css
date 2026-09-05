@@ -92,10 +92,13 @@ h3 { font-size: 1.25rem; }
 .section--dark { background: var(--teal-700); color: #fff; }
 .section--tight { padding-top: 0; }
 
+/* Рубрика над заголовком: оранжевая плашка-овал, чтобы раздел цеплял взгляд */
 .eyebrow {
   display: inline-flex; align-items: center;
+  padding: 5px 14px; border-radius: 999px;
+  background: var(--coral); color: #fff;
   font-size: 0.76rem; font-weight: 700; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--muted);
+  text-transform: uppercase;
 }
 .eyebrow--light { color: #fff; }   /* на фирменном синем читается только белый */
 

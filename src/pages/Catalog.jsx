@@ -7,7 +7,7 @@ import ProductCard from '../components/ProductCard'
 import { useRequestForm } from '../components/RequestModal'
 import { CATEGORIES, FILTERS } from '../data/site'
 import { useContent } from '../components/ContentContext'
-import { matchesSearch } from '../lib/search'
+import { matchesSearch, specText } from '../lib/search'
 import './Pages.css'
 import Seo from '../components/Seo'
 
@@ -22,7 +22,7 @@ const PRICE_TIERS = {
 
 /* «Особенности» и «Тип корпуса» ищем по характеристикам и описанию позиции */
 const matchesFeature = (i, q) => {
-  const hay = [i.title, i.short, ...(i.points || []), ...(i.specs || []).map((sp) => `${sp.k} ${sp.v}`)].join(' ').toLowerCase()
+  const hay = [i.title, i.short, ...Object.values(i.attrs || {}), ...(i.points || []), ...(i.specs || []).map(specText)].join(' ').toLowerCase()
   return hay.includes(q.toLowerCase())
 }
 

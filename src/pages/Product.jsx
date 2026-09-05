@@ -17,8 +17,47 @@ import './Pages.css'
 const TABS = [
   { key: 'desc', label: 'Описание' },
   { key: 'specs', label: 'Характеристики' },
-  { key: 'terms', label: 'Условия' },
+  { key: 'functions', label: 'Функции' },
 ]
+
+const NO_DATA = 'нет данных'
+
+/* Ссылки ведут в каталог с уже выставленным фильтром: с карточки можно
+   уйти к другим аппаратам той же марки или того же типа корпуса. */
+const FORM_LINKS = {
+  'Заушный': '/catalog?cat=bte',
+  'Внутриушной': '/catalog?cat=ite',
+  'Внутриканальный': '/catalog?feature=Внутриканальный',
+  'Канальный': '/catalog?feature=Канальный',
+}
+
+/* Характеристики приходят строками (из панели их вводят свободным списком),
+   но во встроенных данных лежат парами — приводим к одному виду. */
+const specLine = (s) => (typeof s === 'string' ? s : `${s.k} — ${s.v}`)
+
+function Attrs({ attrs }) {
+  const rows = [
+    { label: 'Производитель', value: attrs.brand, to: attrs.brand && attrs.brand !== NO_DATA ? `/catalog?brand=${encodeURIComponent(attrs.brand.split(' (')[0])}` : null },
+    { label: 'Тип корпуса', value: attrs.form, to: FORM_LINKS[attrs.form] || null },
+    { label: 'Уровень мощности', value: attrs.power },
+    { label: 'Тип обработки сигнала', value: attrs.signal },
+    { label: 'Количество каналов', value: attrs.channels },
+  ]
+
+  return (
+    <ul className="prod__points">
+      {rows.map((r) => (
+        <li key={r.label}>
+          <Icon name="check" size={16} />
+          <span>
+            <b>{r.label}:</b>{' '}
+            {r.to ? <Link to={r.to} className="prod__attr-link">{r.value}</Link> : (r.value || NO_DATA)}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 export default function Product() {
   const { CATALOG, SITE } = useContent()
@@ -63,9 +102,13 @@ export default function Product() {
                   {item.old && <s>{item.old}</s>}
                   <small>/ {item.unit}</small>
                 </div>
-                <ul className="prod__points">
-                  {item.points.map((p, i) => <li key={i}><Icon name="check" size={16} /> {p}</li>)}
-                </ul>
+                {item.attrs
+                  ? <Attrs attrs={item.attrs} />
+                  : (
+                    <ul className="prod__points">
+                      {item.points.map((p, i) => <li key={i}><Icon name="check" size={16} /> {p}</li>)}
+                    </ul>
+                  )}
                 {missing && (
                 <p className="prod__stock">
                   <Icon name="clock" size={17} /> Сейчас нет в наличии — сообщим, когда поступит
@@ -132,21 +175,15 @@ export default function Product() {
             )}
 
             {tab === 'specs' && (
-              <table className="spec">
-                <tbody>
-                  {item.specs.map((s, i) => (
-                    <tr key={i}><th>{s.k}</th><td>{s.v}</td></tr>
-                  ))}
-                </tbody>
-              </table>
+              item.specs?.length
+                ? <ul className="speclist">{item.specs.map((s, i) => <li key={i}>{specLine(s)}</li>)}</ul>
+                : <p className="speclist__empty">{NO_DATA}</p>
             )}
 
-            {tab === 'terms' && (
-              <ul className="terms">
-                {item.terms.map((t, i) => (
-                  <li key={i}><span className="terms__n">{i + 1}</span><div><h3>{t}</h3><p>Условие входит в обслуживание и не требует отдельной оплаты.</p></div></li>
-                ))}
-              </ul>
+            {tab === 'functions' && (
+              item.functions?.length
+                ? <ul className="speclist">{item.functions.map((f, i) => <li key={i}>{f}</li>)}</ul>
+                : <p className="speclist__empty">{NO_DATA}</p>
             )}
           </div>
         </div>

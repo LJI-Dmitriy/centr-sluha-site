@@ -7,14 +7,17 @@
   gap: clamp(24px, 4vw, 56px);
   background: var(--teal-700);
   border-radius: 24px; padding: clamp(28px, 4vw, 56px); color: #fff; overflow: hidden;
-  /* высота задана жёстко: иначе слайды с разной длиной текста дёргают страницу */
-  height: clamp(340px, 32vw, 440px);
+  /* нижняя граница держит слайды одной высоты, но длинный заголовок может
+     раздвинуть блок — обрезать надпись хуже, чем показать её на строку ниже */
+  min-height: clamp(340px, 32vw, 440px);
 }
 .hslider__copy { animation: slide-in 0.5s var(--ease); }
 .hslider__copy h1 {
   font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 3.4vw, 2.9rem);
   margin: 14px 0 16px;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  /* три строки: длинные заголовки вроде «Покупка по электронному сертификату
+     СФР» должны помещаться целиком, а не обрываться многоточием */
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .hslider__copy p {
   color: rgba(255, 255, 255, 0.88); font-size: 1.1rem; max-width: 46ch;

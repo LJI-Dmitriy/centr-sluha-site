@@ -45,9 +45,12 @@ export function queryVariants(query) {
   return [...new Set([base, swap(base, RU, EN), swap(base, EN, RU)].flatMap((v) => [v, simplify(v)]))]
 }
 
+/* Характеристики бывают строками (из панели) и парами (во встроенных данных) */
+export const specText = (s) => (typeof s === 'string' ? s : `${s.k} ${s.v}`)
+
 /* Текст позиции, по которому ищем: название, бренд, описание, характеристики */
 export function searchableText(item) {
-  const raw = [item.title, item.brand, item.short, ...(item.points || []), ...(item.specs || []).map((s) => `${s.k} ${s.v}`)]
+  const raw = [item.title, item.brand, item.short, ...Object.values(item.attrs || {}), ...(item.points || []), ...(item.specs || []).map(specText)]
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
