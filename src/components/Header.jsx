@@ -39,7 +39,7 @@ export default function Header() {
 
       <div className="container hdr__inner">
         <Link to="/" className="logo" aria-label={SITE.name}>
-          <span className="logo__mark"><Logo size={36} /></span>
+          <span className="logo__mark"><Logo size={44} /></span>
           <span className="logo__text">{SITE.name}<small>{SITE.tagline}</small></span>
         </Link>
 

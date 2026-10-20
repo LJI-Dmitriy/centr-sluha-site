@@ -47,6 +47,10 @@ self.addEventListener('fetch', (e) => {
     return
   }
 
+  // кэшируем только оформление и картинки; данные (например, ответы панели,
+  // если она окажется на том же адресе) всегда берём свежими из сети
+  if (!['script', 'style', 'image', 'font', 'manifest'].includes(request.destination)) return
+
   // остальное: из кэша сразу, обновление в фоне
   e.respondWith(
     caches.match(request).then((cached) => {

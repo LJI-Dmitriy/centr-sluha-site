@@ -89,7 +89,7 @@ export default function Home() {
           </div>
           <div className="cat-chips">
             {CATEGORIES.map((c) => (
-              <Link key={c.slug} to={`/catalog?cat=${c.slug}`} className="chip">{c.title} <small>{c.count}</small></Link>
+              <Link key={c.slug} to={`/catalog?cat=${c.slug}`} className="chip">{c.title} <small>{CATALOG.filter((i) => i.category === c.slug).length}</small></Link>
             ))}
             {PICKER.slice(0, 3).map((p, i) => (
               <Link key={i} to={`/catalog?cat=${p.cat}`} className="chip">{p.label}</Link>

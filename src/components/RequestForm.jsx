@@ -43,11 +43,17 @@ const LABELS = {
 
 const REQUEST_TYPE = { visit: 'zapis', ask: 'vopros', call: 'zvonok' }
 
-export default function RequestForm({ variant = 'visit', subject, id, items }) {
+export default function RequestForm({ variant = 'visit', subject: rawSubject, id, items }) {
   const { SITE } = useContent()
   const [sent, setSent] = useState(null)
   const [sending, setSending] = useState(false)
   const v = FORM_VARIANTS[variant] || FORM_VARIANTS.visit
+
+  /* Тема бывает двух видов: цель визита из списка — её выбираем в поле, или
+     товар либо акция, с которых открыли форму, — её дописываем в заявку,
+     чтобы центр знал, что именно заинтересовало человека. */
+  const subject = VISIT_GOALS.includes(rawSubject) ? rawSubject : undefined
+  const topic = rawSubject && !subject ? rawSubject : null
 
   /* Заявка уходит в панель управления — владелец видит её в разделе «Заявки».
      Если панель недоступна, показываем готовый текст и способы отправить
@@ -58,6 +64,7 @@ export default function RequestForm({ variant = 'visit', subject, id, items }) {
     const values = Object.fromEntries([...data.entries()].filter(([, val]) => String(val).trim()))
 
     const lines = [`Заявка с сайта: ${v.title.toLowerCase()}`]
+    if (topic) lines.push(`Интересует: ${topic}`)
     for (const [key, value] of Object.entries(values)) {
       if (LABELS[key]) lines.push(`${LABELS[key]}: ${value}`)
     }
@@ -73,7 +80,7 @@ export default function RequestForm({ variant = 'visit', subject, id, items }) {
           phone: values.phone || '',
           email: values.email || '',
           preferred: '',   // дату и время центр согласовывает по телефону
-          items: items || (values.subject ? `Услуга: ${values.subject}` : ''),
+          items: items || [topic && `Интересует: ${topic}`, values.subject && `Цель визита: ${values.subject}`].filter(Boolean).join('; '),
           comment: values.message || '',
           page: window.location.pathname,
         })

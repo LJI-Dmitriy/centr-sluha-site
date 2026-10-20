@@ -3,6 +3,7 @@ import Icon from './Icon'
 import Ph from './Ph'
 import { useRequestForm } from './RequestModal'
 import { useCart } from './CartContext'
+import { priceText } from '../lib/price'
 import './ProductCard.css'
 
 /* Карточка товара/услуги в каталоге: фото, название, короткое описание, цена, кнопки */
@@ -35,13 +36,13 @@ export default function ProductCard({ item, compact = false }) {
           </ul>
         )}
         <div className="pcard__price">
-          <strong>{item.price}</strong>
+          <strong className={item.price ? '' : 'pcard__price--ask'}>{priceText(item.price)}</strong>
           {item.old && <s>{item.old}</s>}
         </div>
         {/* Действий два, а не три: карточка и название и так ведут на страницу товара,
             отдельная кнопка «Подробнее» только спорила с записью на приём. */}
         <div className="pcard__actions">
-          <button className="btn btn-primary btn-sm" onClick={() => openForm(missing ? 'ask' : 'visit', item.slug)}>
+          <button className="btn btn-primary btn-sm" onClick={() => openForm(missing ? 'ask' : 'visit', item.title)}>
             {missing ? 'Сообщить о поступлении' : 'Записаться'}
           </button>
           {!missing && <button

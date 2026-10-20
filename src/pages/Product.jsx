@@ -12,6 +12,7 @@ import { useCart } from '../components/CartContext'
 import NotFound from './NotFound'
 import { CATEGORIES } from '../data/site'
 import { useContent } from '../components/ContentContext'
+import { priceText } from '../lib/price'
 import './Pages.css'
 
 const TABS = [
@@ -72,14 +73,22 @@ export default function Product() {
   const cat = CATEGORIES.find((c) => c.slug === item.category)
   const missing = item.stock === 'net'
   const related = CATALOG.filter((i) => i.slug !== item.slug).slice(0, 4)
+  // условия приёма относятся к аппаратам: у батареек и услуг их не показываем
+  const isDevice = ['bte', 'ite'].includes(item.category)
+  const warranty = (item.specs || []).map(specLine).map((s) => s.match(/^Гарантия\s*[—–:-]\s*(.+)$/i)?.[1]).find(Boolean)
 
   return (
     <>
-      <Seo title={item.title} description={`${item.short} Цена ${item.price}. Подбор и настройка в центре слуха, Краснодар.`} path={`/catalog/${item.slug}`} />
+      <Seo title={item.title} description={`${item.short}${item.price ? ` Цена ${item.price}.` : ''} Подбор и настройка в центре слухопротезирования, Краснодар.`} path={`/catalog/${item.slug}`} />
 
       <section className="prod">
         <div className="container">
-          <Breadcrumbs items={[{ to: '/catalog', label: 'Каталог' }, { to: `/catalog?cat=${cat.slug}`, label: cat.title }, { label: item.title }]} />
+          {/* раздел могут удалить или переименовать в панели — страница товара от этого не падает */}
+          <Breadcrumbs items={[
+            { to: '/catalog', label: 'Каталог' },
+            ...(cat ? [{ to: `/catalog?cat=${cat.slug}`, label: cat.title }] : []),
+            { label: item.title },
+          ]} />
 
           <div className="prod__top">
             {/* Фото */}
@@ -93,14 +102,14 @@ export default function Product() {
             <div className="prod__info">
               {item.tag && <span className="tag tag--accent">{item.tag}</span>}
               <h1>{item.title}</h1>
-              <div className="prod__sku">Артикул: <strong>{item.slug.toUpperCase().slice(0, 8)}</strong> · Наличие: <strong>в центре</strong></div>
+              <div className="prod__sku">Наличие: <strong>{missing ? 'нет в наличии' : 'в центре'}</strong></div>
               <p className="prod__short">{item.short}</p>
 
               <div className="prod__pricebox">
                 <div className="prod__price">
-                  <strong>{item.price}</strong>
+                  <strong className={item.price ? '' : 'prod__price--ask'}>{priceText(item.price)}</strong>
                   {item.old && <s>{item.old}</s>}
-                  <small>/ {item.unit}</small>
+                  {item.price && <small>/ {item.unit}</small>}
                 </div>
                 {item.attrs
                   ? <Attrs attrs={item.attrs} />
@@ -115,7 +124,7 @@ export default function Product() {
                 </p>
               )}
               <div className="prod__actions">
-                  <button className="btn btn-primary" onClick={() => openForm(missing ? 'ask' : 'visit', item.slug)}>
+                  <button className="btn btn-primary" onClick={() => openForm(missing ? 'ask' : 'visit', item.title)}>
                   {missing ? 'Сообщить о поступлении' : 'Записаться на примерку'} <Icon name="arrow" size={18} />
                 </button>
                   {/* Отложить в корзину можно и отсюда: раньше это было только в каталоге,
@@ -136,11 +145,13 @@ export default function Product() {
                 </div>
               </div>
 
-              <ul className="prod__meta">
-                <li><Icon name="home" size={18} /> <span>Выезд на дом<small>по записи</small></span></li>
-                <li><Icon name="shield" size={18} /> <span>Гарантия<small>до 2 лет</small></span></li>
-                <li><Icon name="doc" size={18} /> <span>Настройка<small>входит в цену</small></span></li>
-              </ul>
+              {isDevice && (
+                <ul className="prod__meta">
+                  <li><Icon name="home" size={18} /> <span>Выезд на дом<small>по записи</small></span></li>
+                  {warranty && <li><Icon name="shield" size={18} /> <span>Гарантия<small>{warranty}</small></span></li>}
+                  <li><Icon name="doc" size={18} /> <span>Настройка<small>входит в цену</small></span></li>
+                </ul>
+              )}
             </div>
           </div>
         </div>
@@ -207,7 +218,7 @@ export default function Product() {
               <h3>Записаться на примерку</h3>
               <p>Перезвоним и подтвердим удобное время.</p>
             </div>
-            <RequestForm variant="visit" subject={item.slug} />
+            <RequestForm variant="visit" subject={item.title} />
           </Reveal>
         </div>
       </section>

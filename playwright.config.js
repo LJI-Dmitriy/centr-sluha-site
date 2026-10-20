@@ -13,8 +13,10 @@ export default defineConfig({
   },
   webServer: {
     /* Собираем без адреса панели: тесты проверяют содержимое самого сайта,
-       а не то, что сейчас лежит в панели у владельца. */
-    command: 'VITE_PANEL_URL= npm run build && npm run preview -- --port 4173 --strictPort',
+       а не то, что сейчас лежит в панели у владельца. Переменная задаётся через
+       env, а не в строке команды, — так тесты запускаются и на Windows. */
+    command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+    env: { VITE_PANEL_URL: '' },
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

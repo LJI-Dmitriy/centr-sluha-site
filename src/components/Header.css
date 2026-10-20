@@ -2,7 +2,7 @@
   position: sticky; top: 0; z-index: 50; background: #fff;
   transition: box-shadow 0.3s;
 }
-.hdr--scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -22px rgba(17, 35, 94, 0.5); }
+.hdr--scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -22px rgba(20, 48, 47, 0.5); }
 
 /* Верхняя служебная полоса */
 .hdr__top { background: var(--teal-700); color: rgba(255, 255, 255, 0.8); font-size: 0.84rem; }
@@ -24,10 +24,12 @@
 }
 
 .logo { display: flex; align-items: center; gap: 12px; min-height: 44px; }
+/* Знак читается сам по себе, подложка ему не нужна */
 .logo__mark {
-  width: 46px; height: 46px; border-radius: 12px; background: var(--teal-50);
-  flex-shrink: 0; display: grid; place-items: center;
+  width: 46px; height: 46px; flex-shrink: 0; display: grid; place-items: center;
+  color: var(--teal-700);
 }
+.logo__mark--light { color: #fff; }
 .logo__text { font-weight: 800; font-size: 1.18rem; letter-spacing: -0.02em; line-height: 1.1; display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
 /* подпись под названием видна только в подвале: в шапке это место отдано поиску */
 .logo__text small { display: none; }
@@ -132,8 +134,8 @@
   .burger { display: block; }
   .hdr__cta { display: none; }
   .hdr__inner { height: 58px; gap: 12px; }
-  .logo__mark { width: 36px; height: 36px; border-radius: 10px; }
-  .logo__mark svg { width: 28px; height: 28px; }
+  .logo__mark { width: 36px; height: 36px; }
+  .logo__mark svg { width: 32px; height: 32px; }
   .logo__text { font-size: 1rem; }
   .hdr__cart { width: 44px; height: 44px; }
   .hdr__cart svg { width: 20px; height: 20px; }

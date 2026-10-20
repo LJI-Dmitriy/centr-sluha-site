@@ -1,6 +1,6 @@
 {
-  "name": "Центр слуха — Краснодар",
-  "short_name": "Центр слуха",
+  "name": "Точка слуха — Краснодар",
+  "short_name": "Точка слуха",
   "description": "Тест слуха, подбор и настройка слуховых аппаратов. Краснодар, выезд на дом по краю и Адыгее.",
   "lang": "ru",
   "dir": "ltr",
@@ -9,7 +9,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#1d5fd6",
+  "theme_color": "#397c7b",
   "categories": [
     "medical",
     "health",

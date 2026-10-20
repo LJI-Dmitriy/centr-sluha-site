@@ -62,7 +62,7 @@
 /* Развёрнутая карта */
 .ymap-full {
   position: fixed; inset: 0; z-index: 120;
-  background: rgba(16, 42, 86, 0.55); backdrop-filter: blur(4px);
+  background: rgba(20, 48, 47, 0.55); backdrop-filter: blur(4px);
   display: grid; place-items: center; padding: 20px;
   animation: ymap-in 0.2s var(--ease);
 }

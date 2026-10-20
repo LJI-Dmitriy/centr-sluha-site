@@ -107,7 +107,7 @@
   position: absolute; top: 0; left: 0;
   width: 46px; height: 46px; border-radius: 50%;
   background: var(--teal-700); color: #fff; font-size: 1.2rem; font-weight: 800;
-  display: grid; place-items: center; box-shadow: 0 8px 20px -8px rgba(29, 95, 214, 0.5);
+  display: grid; place-items: center; box-shadow: 0 8px 20px -8px rgba(57, 124, 123, 0.5);
 }
 .step h3 { font-size: 1.15rem; margin-bottom: 8px; }
 .step p { color: var(--muted); font-size: 0.96rem; }

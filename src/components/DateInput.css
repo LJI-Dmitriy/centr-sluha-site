@@ -11,7 +11,7 @@
 .datepick__field:hover { border-color: var(--line); }
 .datepick__field.is-open { background: #fff; border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50); }
 .datepick__field svg { color: var(--muted); flex-shrink: 0; }
-.datepick__placeholder { color: #8b90a8; }
+.datepick__placeholder { color: #8a938f; }
 
 .datepick__drop {
   position: absolute; z-index: 30; left: 0; top: calc(100% + 8px);
@@ -47,7 +47,7 @@
   border-radius: 10px; color: var(--teal-700); transition: background 0.2s, color 0.2s;
 }
 .cal__nav:hover:not(:disabled) { background: var(--teal-50); }
-.cal__nav:disabled { color: #b9bdd2; cursor: default; }
+.cal__nav:disabled { color: #b4bdb9; cursor: default; }
 .cal__nav svg { transform: rotate(180deg); }        /* стрелка влево */
 .cal__nav--next { margin-left: auto; }
 .cal__nav--next svg { transform: none; }
@@ -67,8 +67,8 @@
 .cal__day:hover:not(:disabled) { background: var(--teal-50); color: var(--teal-700); }
 .cal__day--empty { pointer-events: none; }
 /* день, на который записаться нельзя: прошедший или выходной */
-.cal__day.is-off { color: #b9bdd2; cursor: default; }
-.cal__day.is-off:hover { background: none; color: #b9bdd2; }
+.cal__day.is-off { color: #b4bdb9; cursor: default; }
+.cal__day.is-off:hover { background: none; color: #b4bdb9; }
 /* ближайший рабочий день — обведён, выбранный — залит */
 .cal__day.is-start { box-shadow: inset 0 0 0 1.5px var(--teal-600); }
 .cal__day.is-active, .cal__day.is-active:hover { background: var(--teal-700); color: #fff; }

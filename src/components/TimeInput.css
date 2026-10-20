@@ -9,7 +9,7 @@
 .timepick__field:hover { border-color: var(--line); }
 .timepick__field.is-open { background: #fff; border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50); }
 .timepick__field svg { color: var(--muted); flex-shrink: 0; }
-.timepick__placeholder { color: #8b90a8; }
+.timepick__placeholder { color: #8a938f; }
 
 .timepick__drop {
   position: absolute; z-index: 30; left: 0; right: auto; top: calc(100% + 8px);

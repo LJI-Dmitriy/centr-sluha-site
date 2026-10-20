@@ -27,34 +27,22 @@ export default function NewsItem() {
 
           <div className="article">
             <header className="article__head">
-              <div className="ncard__meta"><span className="tag">{item.tag}</span><time>{item.date}</time><span className="article__read">3 минуты чтения</span></div>
+              {/* время чтения — по объёму текста, примерно 180 слов в минуту */}
+              <div className="ncard__meta"><span className="tag">{item.tag}</span><time>{item.date}</time><span className="article__read">{Math.max(1, Math.round([item.excerpt, ...item.body].join(' ').split(/\s+/).length / 180))} мин чтения</span></div>
               <h1>{item.title}</h1>
               <p className="lead">{item.excerpt}</p>
             </header>
 
             <Ph ratio="16 / 9" className="article__cover" src={item.cover} alt={item.title} fit="cover" />
 
+            {/* статья выводится целиком, сколько бы абзацев в ней ни было: шаблон с вставками
+                на 4 абзаца обрезал длинные материалы и добавлял в каждый один и тот же текст */}
             <div className="prose">
-              <p>{item.body[0]}</p>
-              <h2>Что важно помнить</h2>
-              <p>{item.body[1]}</p>
-              <ul className="prose__list">
-                <li>Тест слуха занимает 20–40 минут и не требует подготовки.</li>
-                <li>Аппарат настраивают по аудиограмме, а не «на глаз».</li>
-                <li>Привыкание к новому звуку занимает 2–4 недели.</li>
-              </ul>
-              <figure className="prose__figure">
-                <Ph ratio="21 / 9" src="/cover/wave.svg" alt="Иллюстрация" fit="cover" />
-                <figcaption>Приём сурдолога в центре на Профсоюзной</figcaption>
-              </figure>
-              <h2>Что делать дальше</h2>
-              <p>{item.body[2]}</p>
-              <blockquote className="prose__quote">Чем раньше начать пользоваться аппаратом, тем быстрее мозг вспоминает, как разбирать речь в шуме.</blockquote>
-              <p>{item.body[3]}</p>
+              {item.body.map((p, i) => <p key={i}>{p}</p>)}
             </div>
 
             <div className="article__foot">
-              <div className="article__tags"><span className="tag">Слух</span><span className="tag">Подбор аппарата</span><span className="tag">Советы</span></div>
+              {item.tag && <div className="article__tags"><span className="tag">{item.tag}</span></div>}
               <Link to="/news" className="link-more"><Icon name="arrowLeft" size={18} /> Ко всем материалам</Link>
             </div>
 

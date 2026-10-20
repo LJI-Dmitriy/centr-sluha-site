@@ -9,7 +9,7 @@
 .pcard__tag { position: absolute; top: 14px; left: 14px; background: #fff; }
 .pcard__tag--net { color: var(--coral-ink); background: var(--coral-50); }
 .pcard__tag--sale { color: var(--ink); background: var(--coral); }
-.pcard__tag--pod_zakaz { color: #a2680f; background: #fdf4e3; }
+.pcard__tag--pod_zakaz { color: var(--coral-ink); background: var(--coral-50); }
 .pcard__body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex-grow: 1; }
 .pcard__body h3 { font-size: 1.15rem; margin-bottom: 8px; }
 .pcard__body h3 a:hover { color: var(--teal-700); text-decoration: underline; text-underline-offset: 3px; }
@@ -19,6 +19,8 @@
 .pcard__points svg { color: #fff; background: var(--teal-700); border-radius: 50%; padding: 3px; width: 20px; height: 20px; flex-shrink: 0; }
 .pcard__price { display: flex; align-items: baseline; gap: 10px; margin-top: auto; padding-top: 4px; }
 .pcard__price strong { font-size: 1.3rem; letter-spacing: -0.02em; color: var(--teal-900); }
+/* «Цена по запросу» — длиннее суммы, поэтому мельче, чтобы не ломать карточку */
+.pcard__price--ask { font-size: 1rem !important; font-weight: 700; }
 .pcard__price s { color: var(--muted); font-size: 0.95rem; }
 .pcard__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .pcard__actions .btn { flex: 1 1 110px; padding-inline: 12px; }

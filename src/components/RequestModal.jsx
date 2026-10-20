@@ -5,7 +5,8 @@ import './RequestModal.css'
 
 const Ctx = createContext(() => {})
 
-/* openForm('call' | 'visit' | 'ask', subjectSlug?) — открывает модальную форму из любого места */
+/* openForm('call' | 'visit' | 'ask', тема?) — открывает модальную форму из любого места.
+   Тема — цель визита из списка или название товара/акции, откуда пришёл человек */
 export const useRequestForm = () => useContext(Ctx)
 
 export function RequestProvider({ children }) {

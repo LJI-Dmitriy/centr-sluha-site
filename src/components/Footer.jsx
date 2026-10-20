@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="container ftr__grid">
         <div className="ftr__brand">
           <div className="logo">
-            <span className="logo__mark logo__mark--light"><Logo size={36} /></span>
+            <span className="logo__mark logo__mark--light"><Logo size={44} /></span>
             <span className="logo__text" style={{ color: '#fff' }}>
               {SITE.name}<small style={{ color: 'rgba(255,255,255,.6)' }}>{SITE.tagline}</small>
             </span>

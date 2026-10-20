@@ -6,7 +6,6 @@
   display: grid; grid-template-columns: 1.4fr 0.8fr 0.95fr 1.5fr 1fr; gap: 28px;
   padding-bottom: 36px;
 }
-.ftr__brand .logo__mark--light { background: #fff; }
 .ftr__about { margin: 18px 0 16px; max-width: 40ch; font-size: 1rem; line-height: 1.75; color: rgba(255, 255, 255, 0.92); }
 .ftr .logo__text small { display: block; font-weight: 500; font-size: 0.72rem; letter-spacing: 0.03em; color: rgba(255, 255, 255, 0.8); white-space: nowrap; }
 .ftr__col { display: flex; flex-direction: column; gap: 10px; }

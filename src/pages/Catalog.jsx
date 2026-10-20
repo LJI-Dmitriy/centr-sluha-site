@@ -8,17 +8,24 @@ import { useRequestForm } from '../components/RequestModal'
 import { CATEGORIES, FILTERS } from '../data/site'
 import { useContent } from '../components/ContentContext'
 import { matchesSearch, specText } from '../lib/search'
+import { priceValue } from '../lib/price'
 import './Pages.css'
 import Seo from '../components/Seo'
-
-/* Цена в данных — строка вида «от 7 890 ₽», берём из неё число */
-const priceValue = (s) => Number((s.match(/[\d\s]+/) || [''])[0].replace(/\s/g, '')) || 0
 
 const PRICE_TIERS = {
   low: { label: 'Недорогие', test: (v) => v > 0 && v < 15000 },
   mid: { label: 'Средняя цена', test: (v) => v >= 15000 && v <= 60000 },
   premium: { label: 'Премиум', test: (v) => v > 60000 },
 }
+
+/* Позиции без цены всегда уходят в конец списка: ставить их рядом
+   с бесплатными услугами было бы враньём */
+const byPrice = (dir) => (list) => [...list].sort((a, b) => {
+  const x = priceValue(a.price)
+  const y = priceValue(b.price)
+  if (x === null || y === null) return x === y ? 0 : x === null ? 1 : -1
+  return dir * (x - y)
+})
 
 /* «Особенности» и «Тип корпуса» ищем по характеристикам и описанию позиции */
 const matchesFeature = (i, q) => {
@@ -31,8 +38,8 @@ const PER_PAGE = 6
 /* Порядок вывода: значение в адресе → как сортируем список */
 const SORT_MODES = {
   popular: { label: 'По популярности', apply: (list) => list },
-  cheap: { label: 'Сначала дешевле', apply: (list) => [...list].sort((a, b) => priceValue(a.price) - priceValue(b.price)) },
-  expensive: { label: 'Сначала дороже', apply: (list) => [...list].sort((a, b) => priceValue(b.price) - priceValue(a.price)) },
+  cheap: { label: 'Сначала дешевле', apply: byPrice(1) },
+  expensive: { label: 'Сначала дороже', apply: byPrice(-1) },
   fresh: { label: 'Сначала новинки', apply: (list) => [...list].sort((a, b) => Number(Boolean(b.tag)) - Number(Boolean(a.tag))) },
 }
 
@@ -57,10 +64,12 @@ export default function Catalog() {
     if (cat && i.category !== cat) return false
     if (brand && !matchesFeature(i, brand)) return false
     if (feature && !matchesFeature(i, feature)) return false
-    if (price && PRICE_TIERS[price] && !PRICE_TIERS[price].test(priceValue(i.price))) return false
+    // цена не указана — позиция не проходит подбор по цене, иначе попала бы в «до 20 000»
+    const value = priceValue(i.price)
+    if (price && PRICE_TIERS[price] && (value === null || !PRICE_TIERS[price].test(value))) return false
     if (query && !matchesSearch(i, query)) return false
-    if (priceFrom && priceValue(i.price) < priceFrom) return false
-    if (priceTo && priceValue(i.price) > priceTo) return false
+    if (priceFrom && (value === null || value < priceFrom)) return false
+    if (priceTo && (value === null || value > priceTo)) return false
     return true
   })
 
@@ -98,7 +107,7 @@ export default function Catalog() {
 
   return (
     <>
-      <Seo title={"Слуховые аппараты"} description={"Заушные, внутриушные и внутриканальные аппараты от 7 890 ₽. Подбор сурдолога после теста слуха."} path={"/catalog"} />
+      <Seo title={"Слуховые аппараты"} description={"Заушные, внутриушные и внутриканальные слуховые аппараты. Подбор сурдолога после теста слуха."} path={"/catalog"} />
       <PageHero
         crumbs={[{ label: active ? active.title : extra || 'Каталог' }]}
         eyebrow="Каталог"
@@ -123,7 +132,7 @@ export default function Catalog() {
                     <label>
                       <input type="radio" name="cat" checked={cat === c.slug} onChange={() => setCat(c.slug)} />
                       <span>{c.title}</span>
-                      <small>{c.count}</small>
+                      <small>{CATALOG.filter((i) => i.category === c.slug).length}</small>
                     </label>
                   </li>
                 ))}

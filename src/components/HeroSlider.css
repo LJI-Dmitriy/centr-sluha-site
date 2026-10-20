@@ -7,9 +7,10 @@
   gap: clamp(24px, 4vw, 56px);
   background: var(--teal-700);
   border-radius: 24px; padding: clamp(28px, 4vw, 56px); color: #fff; overflow: hidden;
-  /* нижняя граница держит слайды одной высоты, но длинный заголовок может
-     раздвинуть блок — обрезать надпись хуже, чем показать её на строку ниже */
-  min-height: clamp(340px, 32vw, 440px);
+  /* Высота одна на все слайды и рассчитана на заголовок в три строки:
+     иначе длинный заголовок раздвигал бы блок, а стрелки листания
+     прыгали бы вниз-вверх при переключении. */
+  height: clamp(400px, 42vw, 500px);
 }
 .hslider__copy { animation: slide-in 0.5s var(--ease); }
 .hslider__copy h1 {

@@ -5,6 +5,7 @@ import Ph from '../components/Ph'
 import RequestForm from '../components/RequestForm'
 import { useCart } from '../components/CartContext'
 import { useContent } from '../components/ContentContext'
+import { priceText } from '../lib/price'
 import './Pages.css'
 import Seo from '../components/Seo'
 
@@ -37,10 +38,9 @@ export default function Cart() {
                     <div className="cart__body">
                       <h3><Link to={`/catalog/${i.slug}`}>{i.title}</Link></h3>
                       <p>{i.short}</p>
-                      <span className="cart__meta">Артикул: <strong>{i.slug.toUpperCase().slice(0, 8)}</strong></span>
                     </div>
                     <div className="cart__price">
-                      <strong>{i.price}</strong>
+                      <strong>{priceText(i.price)}</strong>
                       {i.old && <s>{i.old}</s>}
                     </div>
                     <button className="cart__del" onClick={() => cart.remove(i.slug)} aria-label="Убрать">
@@ -61,7 +61,7 @@ export default function Cart() {
                     <h3>Записаться на примерку</h3>
                     <p>Подготовим выбранные модели к вашему визиту.</p>
                   </div>
-                  <RequestForm variant="visit" items={items.map((i) => `${i.title} — ${i.price}`).join('; ')} />
+                  <RequestForm variant="visit" items={items.map((i) => `${i.title} — ${priceText(i.price)}`).join('; ')} />
                 </div>
               </aside>
             </div>

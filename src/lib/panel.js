@@ -5,7 +5,7 @@
    отвечает, эти данные замещает. Заявки при недоступной панели уходят
    прежним путём — сообщением или письмом. */
 
-import { CATALOG as BUILTIN_CATALOG, NEWS as BUILTIN_NEWS } from '../data/site'
+import { CATALOG as BUILTIN_CATALOG, NEWS as BUILTIN_NEWS, PROMOS as BUILTIN_PROMOS } from '../data/site'
 
 const URL_BASE = import.meta.env.VITE_PANEL_URL || ''
 
@@ -13,6 +13,7 @@ const URL_BASE = import.meta.env.VITE_PANEL_URL || ''
    берём картинку по такому же адресу страницы — карточка не остаётся пустой. */
 const BUILTIN_IMAGES = new Map(BUILTIN_CATALOG.filter((p) => p.img).map((p) => [p.slug, p.img]))
 const BUILTIN_COVERS = new Map(BUILTIN_NEWS.filter((n) => n.cover).map((n) => [n.slug, n.cover]))
+const BUILTIN_PROMO_COVERS = new Map(BUILTIN_PROMOS.filter((a) => a.cover).map((a) => [a.slug, a.cover]))
 
 export const panelEnabled = Boolean(URL_BASE)
 
@@ -37,6 +38,36 @@ const toList = (value) => {
   } catch {
     return value.split('\n').map((v) => v.trim()).filter(Boolean)
   }
+}
+
+/* Абзацы в панели разделяют пустой строкой; строка из пробелов тоже считается пустой */
+const toParagraphs = (value) => String(value || '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+
+/* Текст страницы акции набирают в редакторе панели кнопками: «# » — заголовок,
+   «- » — пункт списка, «> » — сноска мелким шрифтом, остальное — абзацы.
+   Соседние строки одного вида склеиваются в один блок. */
+const toBlocks = (value) => {
+  const blocks = []
+  let prev = null
+  for (const raw of String(value || '').split(/\r?\n/)) {
+    const line = raw.trim().replace(/\*\*|__/g, '')
+    if (!line) { prev = null; continue }
+    const last = blocks[blocks.length - 1]
+    let m
+    if ((m = line.match(/^#{1,6}\s+(.+)/))) {
+      blocks.push({ h: m[1] }); prev = 'h'
+    } else if ((m = line.match(/^[-*•]\s+(.+)/))) {
+      if (prev === 'list') last.list.push(m[1]); else blocks.push({ list: [m[1]] })
+      prev = 'list'
+    } else if ((m = line.match(/^>\s?(.*)/))) {
+      if (prev === 'note') last.note += ` ${m[1]}`; else blocks.push({ note: m[1] })
+      prev = 'note'
+    } else {
+      if (prev === 'p') last.p += ` ${line}`; else blocks.push({ p: line })
+      prev = 'p'
+    }
+  }
+  return blocks
 }
 
 const NO_DATA = 'нет данных'
@@ -68,7 +99,7 @@ const toProduct = (p) => ({
   specs: toList(p.specs),
   functions: toList(p.functions),
   attrs: toAttrs(p),
-  desc: (p.description || '').split('\n\n').filter(Boolean),
+  desc: toParagraphs(p.description),
   unit: 'шт',
   stock: p.stock,
   onHome: !!p.on_home,
@@ -89,7 +120,7 @@ const toPost = (n) => ({
   title: n.title,
   excerpt: n.excerpt || '',
   cover: fileUrl(n.cover) || BUILTIN_COVERS.get(n.slug) || null,
-  body: (n.body || '').split('\n\n').filter(Boolean),
+  body: toParagraphs(n.body),
 })
 
 /* Цена в панели — строка вида «46 900 ₽»: достаём число, считаем скидку и
@@ -111,13 +142,22 @@ const withDiscount = (price, percent) => {
   return `${parts.prefix}${value.toLocaleString('ru-RU')}${parts.suffix}`
 }
 
+/* Акция с датой окончания пропадает с сайта на следующий день после неё */
+const isActive = (a) => {
+  if (!a.date_end) return true
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return new Date(`${String(a.date_end).split('T')[0]}T00:00:00`) >= today
+}
+
 const toPromo = (a) => ({
+  slug: a.slug,
   title: a.title,
   text: a.text || '',
   note: a.benefit || '',
   until: toRuDate(a.date_end),
-  cover: fileUrl(a.image),
-  inSlider: !!a.in_slider,
+  cover: fileUrl(a.image) || BUILTIN_PROMO_COVERS.get(a.slug) || null,
+  body: toBlocks(a.body),
 })
 
 const toCenter = (c) => ({
@@ -129,14 +169,16 @@ const toCenter = (c) => ({
   phone: c.phone,
   coords: String(c.coords || '')
     .split(',')
-    .map((n) => Number(n.trim()))
+    .map((n) => n.trim())
+    .filter(Boolean)
+    .map(Number)
     .filter((n) => !Number.isNaN(n)),
   note: c.note || '',
-  desc: (c.desc || '').split('\n\n').filter(Boolean),
+  desc: toParagraphs(c.desc),
   features: toList(c.features),
   cover: fileUrl(c.photo),
   gallery: [],
-  route: [],
+  route: toList(c.route),
   district: '',
 })
 
@@ -153,11 +195,12 @@ export async function loadContent() {
   ])
 
   const products = tovary.map(toProduct)
+  const promos = akcii.filter(isActive)
 
   /* Акция со скидкой проставляется товарам, которые в ней выбраны:
      на карточке появляется плашка, а цена показывается пересчитанной. */
   const byId = new Map(tovary.map((row, i) => [row.id, products[i]]))
-  for (const promo of akcii) {
+  for (const promo of promos) {
     if (!promo.discount) continue
     for (const link of promo.tovary || []) {
       const product = byId.get(link.tovary_id?.id ?? link.tovary_id)
@@ -174,7 +217,7 @@ export async function loadContent() {
     CATALOG: products,
     HOME_PRODUCTS: products.filter((p) => p.onHome),
     SERVICES: uslugi.map((s) => ({ title: s.title, price: s.price, text: s.text || '', icon: 'wave' })),
-    PROMOS: akcii.map(toPromo),
+    PROMOS: promos.map(toPromo),
     NEWS: novosti.map(toPost),
     CENTERS: centry.map(toCenter),
     LINKS: svyaz
