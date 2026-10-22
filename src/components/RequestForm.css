@@ -9,10 +9,10 @@
   background: var(--sand);
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
-.rform input::placeholder, .rform textarea::placeholder { color: #8a938f; }
+.rform input::placeholder, .rform textarea::placeholder { color: #8c8c8c; }
 .rform input:hover, .rform select:hover, .rform textarea:hover { border-color: var(--line); }
 .rform input:focus, .rform select:focus, .rform textarea:focus {
-  outline: none; background: #fff; border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50);
+  outline: none; background: #fff; border-color: var(--teal-700); box-shadow: 0 0 0 4px var(--sand);
 }
 
 /* Поле комментария: без «уголка» для растягивания — растёт само по мере ввода */
@@ -39,7 +39,7 @@
 
 .rform--done { text-align: center; align-items: center; gap: 14px; padding: 24px 0; }
 .rform__check {
-  width: 64px; height: 64px; border-radius: 50%; background: var(--teal-50); color: var(--teal-700);
+  width: 64px; height: 64px; border-radius: 50%; background: var(--sand); color: var(--teal-700);
   display: grid; place-items: center;
 }
 .rform--done p { color: var(--muted); max-width: 44ch; }

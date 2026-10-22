@@ -24,7 +24,7 @@ export default function HeroSlider() {
             <h1>{s.title}</h1>
             {s.text && <p>{s.text}</p>}
             <div className="hslider__cta">
-              <button className="btn btn-light" onClick={() => openForm('visit')}>{s.cta} <Icon name="arrow" size={18} /></button>
+              <button className="btn btn-primary" onClick={() => openForm('visit')}>{s.cta} <Icon name="arrow" size={18} /></button>
               <span className="hslider__note">{s.note}</span>
             </div>
           </div>

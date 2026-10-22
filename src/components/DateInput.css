@@ -9,9 +9,9 @@
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 .datepick__field:hover { border-color: var(--line); }
-.datepick__field.is-open { background: #fff; border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50); }
+.datepick__field.is-open { background: #fff; border-color: var(--teal-700); box-shadow: 0 0 0 4px var(--sand); }
 .datepick__field svg { color: var(--muted); flex-shrink: 0; }
-.datepick__placeholder { color: #8a938f; }
+.datepick__placeholder { color: #8c8c8c; }
 
 .datepick__drop {
   position: absolute; z-index: 30; left: 0; top: calc(100% + 8px);
@@ -40,14 +40,14 @@
   background-repeat: no-repeat;
 }
 .datepick .cal__year:hover { background-color: var(--sand); }
-.datepick .cal__year:focus { outline: none; background-color: var(--teal-50); }
-.datepick .cal__year:focus-visible { outline: 3px solid var(--teal-600); }
+.datepick .cal__year:focus { outline: none; background-color: var(--sand); }
+.datepick .cal__year:focus-visible { outline: 3px solid var(--teal-700); }
 .cal__nav {
   width: 34px; height: 34px; flex-shrink: 0; display: grid; place-items: center;
   border-radius: 10px; color: var(--teal-700); transition: background 0.2s, color 0.2s;
 }
-.cal__nav:hover:not(:disabled) { background: var(--teal-50); }
-.cal__nav:disabled { color: #b4bdb9; cursor: default; }
+.cal__nav:hover:not(:disabled) { background: var(--sand); }
+.cal__nav:disabled { color: #b8b8b8; cursor: default; }
 .cal__nav svg { transform: rotate(180deg); }        /* стрелка влево */
 .cal__nav--next { margin-left: auto; }
 .cal__nav--next svg { transform: none; }
@@ -64,13 +64,13 @@
   font-variant-numeric: tabular-nums;
   transition: background 0.15s, color 0.15s;
 }
-.cal__day:hover:not(:disabled) { background: var(--teal-50); color: var(--teal-700); }
+.cal__day:hover:not(:disabled) { background: var(--sand); color: var(--teal-700); }
 .cal__day--empty { pointer-events: none; }
 /* день, на который записаться нельзя: прошедший или выходной */
-.cal__day.is-off { color: #b4bdb9; cursor: default; }
-.cal__day.is-off:hover { background: none; color: #b4bdb9; }
+.cal__day.is-off { color: #b8b8b8; cursor: default; }
+.cal__day.is-off:hover { background: none; color: #b8b8b8; }
 /* ближайший рабочий день — обведён, выбранный — залит */
-.cal__day.is-start { box-shadow: inset 0 0 0 1.5px var(--teal-600); }
+.cal__day.is-start { box-shadow: inset 0 0 0 1.5px var(--teal-700); }
 .cal__day.is-active, .cal__day.is-active:hover { background: var(--teal-700); color: #fff; }
 
 .datepick__foot {

@@ -2,20 +2,20 @@
   position: sticky; top: 0; z-index: 50; background: #fff;
   transition: box-shadow 0.3s;
 }
-.hdr--scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -22px rgba(20, 48, 47, 0.5); }
+.hdr--scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -22px rgba(0, 0, 0, 0.5); }
 
 /* Верхняя служебная полоса */
-.hdr__top { background: var(--teal-700); color: rgba(255, 255, 255, 0.8); font-size: 0.84rem; }
+.hdr__top { background: var(--teal-700); color: #fff; font-size: 0.84rem; }
 .hdr__top-inner { display: flex; align-items: center; gap: 28px; height: 40px; flex-wrap: wrap; overflow: hidden; }
 /* только прямые элементы полосы: иначе части почты разъезжались на 8px */
 .hdr__top-inner > span, .hdr__top-inner > a { display: inline-flex; align-items: center; gap: 8px; }
-.hdr__top-inner svg { color: var(--sky); }
+.hdr__top-inner svg { color: #fff; }
 .hdr__top-inner a:hover { color: #fff; }
 .hdr__mail { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 .hdr__mail .mail__name { overflow-wrap: normal; }
 .hdr__mail .mail:hover { color: #fff; }
 .hdr__city { font-weight: 700; color: #fff; }
-.hdr__city svg:last-child { color: rgba(255, 255, 255, 0.6); }
+.hdr__city svg:last-child { color: #fff; }
 .hdr__top-phone { margin-left: auto; color: #fff; font-weight: 700; font-size: 0.92rem; letter-spacing: 0.01em; }
 
 .hdr__inner {
@@ -27,9 +27,8 @@
 /* Знак читается сам по себе, подложка ему не нужна */
 .logo__mark {
   width: 46px; height: 46px; flex-shrink: 0; display: grid; place-items: center;
-  color: var(--teal-700);
+  color: var(--coral);
 }
-.logo__mark--light { color: #fff; }
 .logo__text { font-weight: 800; font-size: 1.18rem; letter-spacing: -0.02em; line-height: 1.1; display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
 /* подпись под названием видна только в подвале: в шапке это место отдано поиску */
 .logo__text small { display: none; }
@@ -72,7 +71,7 @@
   font-size: 0.92rem; font-weight: 600; padding: 8px 14px;
   background: var(--sand); border-radius: 999px; transition: background 0.2s, color 0.2s;
 }
-.megamenu__more a:hover { background: var(--teal-50); color: var(--teal-700); }
+.megamenu__more a:hover { background: var(--sand); color: var(--teal-700); }
 .megamenu__foot {
   display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
   margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
@@ -89,7 +88,7 @@
   background: var(--sand); border: 1px solid var(--line); border-radius: 12px; padding: 0 14px; height: 44px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.hdr__search:focus-within { border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50); }
+.hdr__search:focus-within { border-color: var(--teal-700); box-shadow: 0 0 0 4px var(--sand); }
 .hdr__search svg { color: var(--muted); flex-shrink: 0; }
 .hdr__search input {
   border: none; background: none; outline: none; width: 100%;
@@ -98,12 +97,14 @@
 
 .hdr__actions { display: flex; align-items: center; gap: 16px; }
 .hdr__cart { position: relative; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--ink); transition: background 0.2s, color 0.2s; }
-.hdr__cart:hover { background: var(--teal-50); color: var(--teal-700); }
+.hdr__cart:hover { background: var(--sand); color: var(--teal-700); }
 .hdr__cart-badge {
   position: absolute; top: 8px; right: 8px; width: 10px; height: 10px;
   border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 2px #fff;
 }
 .hdr__cta { padding: 13px 22px; font-size: 0.96rem; }
+/* главная кнопка записи — основным оранжевым, и при наведении тоже */
+.btn.hdr__cta, .btn.hdr__cta:hover { background: var(--coral); }
 
 .burger { display: none; width: 44px; height: 44px; position: relative; }
 /* без превращения полосок в крестик: открытое меню и так видно */
@@ -171,7 +172,7 @@
   font-size: 0.92rem; font-weight: 600; padding: 8px 14px;
   background: var(--sand); border-radius: 999px; transition: background 0.2s, color 0.2s;
 }
-.megamenu__more a:hover { background: var(--teal-50); color: var(--teal-700); }
+.megamenu__more a:hover { background: var(--sand); color: var(--teal-700); }
 .megamenu__foot { margin-top: 14px; }
   .nav__phone { display: flex; align-items: center; min-height: 44px; margin-top: 16px; font-size: 1.15rem; font-weight: 800; color: var(--teal-700); }
   .nav__cta { display: inline-flex; margin-top: 14px; }

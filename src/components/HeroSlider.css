@@ -5,7 +5,8 @@
 .hslider__box {
   position: relative; display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center;
   gap: clamp(24px, 4vw, 56px);
-  background: var(--teal-700);
+  /* светлая бирюза с белым текстом, как в брендбуке; кнопки записи — бирюзовые */
+  background: var(--teal-300);
   border-radius: 24px; padding: clamp(28px, 4vw, 56px); color: #fff; overflow: hidden;
   /* Высота одна на все слайды и рассчитана на заголовок в три строки:
      иначе длинный заголовок раздвигал бы блок, а стрелки листания
@@ -21,7 +22,7 @@
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .hslider__copy p {
-  color: rgba(255, 255, 255, 0.88); font-size: 1.1rem; max-width: 46ch;
+  color: #fff; font-size: 1.1rem; max-width: 46ch;
   /* тексты слайдов разной длины — держим одинаковую высоту, но не режем на полуслове */
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
@@ -45,9 +46,9 @@
 .hslider__dots button { width: 26px; height: 44px; display: grid; place-items: center; }
 .hslider__dots button::after {
   content: ''; width: 9px; height: 9px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35); transition: width 0.25s, background 0.25s;
+  background: #fff; transition: width 0.25s, background 0.25s;
 }
-.hslider__dots button.is-active::after { width: 26px; border-radius: 999px; background: #fff; }
+.hslider__dots button.is-active::after { width: 26px; border-radius: 999px; background: var(--teal-700); }
 
 @keyframes slide-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
@@ -55,18 +56,18 @@
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
 .tile {
   display: flex; align-items: center; gap: 12px;
-  background: var(--teal-50); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--sand); border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 18px 20px; font-weight: 700; transition: background 0.25s, transform 0.25s var(--ease);
 }
-.tile:hover { background: var(--teal-50); transform: translateY(-2px); }
+.tile:hover { background: var(--sand); transform: translateY(-2px); }
 .tile__ic { width: 40px; height: 40px; border-radius: 11px; background: #fff; color: var(--teal-700); display: grid; place-items: center; flex-shrink: 0; }
 .tile__label { flex-grow: 1; font-size: 0.98rem; }
 .tile svg:last-child { color: var(--teal-700); flex-shrink: 0; }
 
 /* на узких экранах поля кончаются — возвращаем стрелки внутрь */
 @media (max-width: 1340px) {
-  .hslider__arrow { background: rgba(255, 255, 255, 0.16); color: #fff; box-shadow: none; }
-  .hslider__arrow:hover { background: rgba(255, 255, 255, 0.3); color: #fff; }
+  .hslider__arrow { box-shadow: none; }
+  .hslider__arrow:hover { background: var(--coral); color: #fff; }
   .hslider__arrow--prev { left: 12px; }
   .hslider__arrow--next { right: 12px; }
 }

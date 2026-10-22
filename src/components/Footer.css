@@ -1,54 +1,54 @@
 .ftr {
-  background: var(--teal-900); color: rgba(255, 255, 255, 0.9);
+  background: var(--teal-700); color: #fff;
   padding-top: 48px;
 }
 .ftr__grid {
   display: grid; grid-template-columns: 1.4fr 0.8fr 0.95fr 1.5fr 1fr; gap: 28px;
   padding-bottom: 36px;
 }
-.ftr__about { margin: 18px 0 16px; max-width: 40ch; font-size: 1rem; line-height: 1.75; color: rgba(255, 255, 255, 0.92); }
-.ftr .logo__text small { display: block; font-weight: 500; font-size: 0.72rem; letter-spacing: 0.03em; color: rgba(255, 255, 255, 0.8); white-space: nowrap; }
+.ftr__about { margin: 18px 0 16px; max-width: 40ch; font-size: 1rem; line-height: 1.75; color: #fff; }
+.ftr .logo__text small { display: block; font-weight: 500; font-size: 0.72rem; letter-spacing: 0.03em; color: #fff; white-space: nowrap; }
 .ftr__col { display: flex; flex-direction: column; gap: 10px; }
 .ftr__col h4 { color: #fff; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
-.ftr__col > a, .ftr__col > span { display: flex; align-items: center; gap: 10px; color: rgba(255, 255, 255, 0.92); font-size: 1rem; transition: color 0.2s; }
+.ftr__col > a, .ftr__col > span { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 1rem; transition: color 0.2s; }
 .ftr__mail { align-items: center; }
 .ftr__mail .mail { font-size: 0.92rem; white-space: nowrap; }
-.ftr__mail .mail { color: rgba(255, 255, 255, 0.92); }
+.ftr__mail .mail { color: #fff; }
 .ftr__mail .mail:hover { color: #fff; }
 .ftr__col > a:hover { color: #fff; }
 .ftr__col > a svg, .ftr__col > span svg { color: var(--sky); flex-shrink: 0; }
 
-.ftr__hint { color: rgba(255, 255, 255, 0.8); font-size: 0.86rem; line-height: 1.5; margin-bottom: 4px; }
+.ftr__hint { color: #fff; font-size: 0.86rem; line-height: 1.5; margin-bottom: 4px; }
 .ftr__chats { display: flex; flex-direction: column; gap: 8px; }
 .ftr__chat {
   display: inline-flex; align-items: center; gap: 10px; width: fit-content;
   padding: 9px 14px; border-radius: 10px; font-size: 0.94rem;
-  background: rgba(255, 255, 255, 0.08); transition: background 0.2s;
+  border: 1px solid var(--teal-300); transition: border-color 0.2s;
 }
-.ftr__chat:hover { background: rgba(255, 255, 255, 0.18); }
+.ftr__chat:hover { border-color: #fff; }
 .ftr__chat svg { color: var(--sky); }
 
 .ftr__extra {
   display: flex; flex-wrap: wrap; gap: 10px 24px; padding: 16px 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.9rem;
+  border-top: 1px solid var(--teal-300); font-size: 0.9rem;
 }
 .ftr__extra a, .ftr__extra button {
-  color: rgba(255, 255, 255, 0.8); font-weight: 600; font-size: 0.9rem; transition: color 0.2s;
+  color: #fff; font-weight: 600; font-size: 0.9rem; transition: color 0.2s;
 }
 .ftr__extra a:hover, .ftr__extra button:hover { color: #fff; }
 
 .ftr__offer {
-  padding-top: 14px; color: rgba(255, 255, 255, 0.75); font-size: 0.8rem; line-height: 1.6; max-width: 96ch;
+  padding-top: 14px; color: #fff; font-size: 0.8rem; line-height: 1.6; max-width: 96ch;
 }
 .ftr__note {
-  padding: 0 24px 18px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.72);
+  padding: 0 24px 18px; font-size: 0.8rem; color: #fff;
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 
 .ftr__bottom {
   display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
-  padding: 24px 0 32px; border-top: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 0.84rem; color: rgba(255, 255, 255, 0.75);
+  padding: 24px 0 32px; border-top: 1px solid var(--teal-300);
+  font-size: 0.84rem; color: #fff;
 }
 .ftr__legal { display: inline-flex; gap: 22px; flex-wrap: wrap; padding-left: clamp(12px, 3vw, 56px); }
 .ftr__legal a { text-decoration: underline; text-underline-offset: 3px; }
@@ -70,7 +70,7 @@
   .ftr__about { margin: 16px 0 14px; font-size: 0.94rem; }
   .ftr__extra { gap: 10px 18px; padding: 18px 24px; }
   .ftr__offer {
-  padding-top: 14px; color: rgba(255, 255, 255, 0.75); font-size: 0.8rem; line-height: 1.6; max-width: 96ch;
+  padding-top: 14px; color: #fff; font-size: 0.8rem; line-height: 1.6; max-width: 96ch;
 }
 .ftr__note { font-size: 0.72rem; letter-spacing: 0.04em; }
   .ftr__bottom { flex-direction: column; align-items: flex-start; }

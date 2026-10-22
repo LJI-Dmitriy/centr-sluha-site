@@ -7,9 +7,9 @@
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 .timepick__field:hover { border-color: var(--line); }
-.timepick__field.is-open { background: #fff; border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50); }
+.timepick__field.is-open { background: #fff; border-color: var(--teal-700); box-shadow: 0 0 0 4px var(--sand); }
 .timepick__field svg { color: var(--muted); flex-shrink: 0; }
-.timepick__placeholder { color: #8a938f; }
+.timepick__placeholder { color: #8c8c8c; }
 
 .timepick__drop {
   position: absolute; z-index: 30; left: 0; right: auto; top: calc(100% + 8px);
@@ -24,11 +24,11 @@
 .timepick__wheels { position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .timepick__band {
   position: absolute; left: 6px; right: 6px; top: 50%; height: 42px; transform: translateY(-50%);
-  background: var(--teal-50); border-radius: 10px; pointer-events: none;
+  background: var(--sand); border-radius: 10px; pointer-events: none;
 }
 .timepick__colon { font-weight: 800; color: var(--muted); }
 
-.timepick__warn { color: var(--coral-ink); }
+.timepick__warn { color: var(--coral); }
 .timepick__foot {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line);

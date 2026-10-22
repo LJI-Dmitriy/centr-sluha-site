@@ -13,5 +13,5 @@
 .wheel__item:hover { color: var(--ink); }
 .wheel__item.is-active { color: var(--teal-700); font-size: 1.2rem; font-weight: 800; }
 /* день, который выбрать нельзя: прошедший или выходной */
-.wheel__item.is-off { color: #b4bdb9; }
-.wheel__item.is-off:hover { color: #b4bdb9; }
+.wheel__item.is-off { color: #b8b8b8; }
+.wheel__item.is-off:hover { color: #b8b8b8; }

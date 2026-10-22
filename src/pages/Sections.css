@@ -6,11 +6,11 @@
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .tile {
   display: flex; align-items: center; gap: 12px; width: 100%;
-  background: var(--teal-50); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--sand); border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 18px 20px; font-weight: 700; text-align: left;
   transition: background 0.25s, transform 0.25s var(--ease);
 }
-.tile:hover { background: var(--teal-50); transform: translateY(-2px); }
+.tile:hover { background: var(--sand); transform: translateY(-2px); }
 .tile__ic { width: 40px; height: 40px; border-radius: 11px; background: #fff; color: var(--teal-700); display: grid; place-items: center; flex-shrink: 0; }
 .tile__label { flex-grow: 1; font-size: 0.98rem; }
 .tile svg:last-child { color: var(--teal-700); flex-shrink: 0; }
@@ -21,14 +21,14 @@
 /* ===== БЫСТРЫЙ ПОДБОР ===== */
 .picker { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 24px 32px; align-items: start; }
 .picker h2 { margin-top: 10px; font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
-.chip--all { background: var(--gold-50); border-color: var(--line); color: var(--teal-700); }
+.chip--all { background: var(--sand); border-color: var(--line); color: var(--teal-700); }
 
 /* ===== БРЕНДЫ ===== */
 .brands { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; align-items: center; }
 .brands__logo {
   display: grid; place-items: center; height: 64px; border-radius: 10px;
   background: #fff; border: 1px solid var(--line);
-  font-weight: 800; font-size: 1.05rem; color: var(--teal-900); letter-spacing: -0.01em;
+  font-weight: 800; font-size: 1.05rem; color: var(--teal-700); letter-spacing: -0.01em;
 }
 
 /* ===== УСЛУГИ С ЦЕНАМИ ===== */
@@ -38,31 +38,34 @@
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
 }
 .srv:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
-.srv__ic { width: 50px; height: 50px; border-radius: 14px; background: var(--teal-50); color: var(--teal-700); display: grid; place-items: center; }
+.srv__ic { width: 50px; height: 50px; border-radius: 14px; background: var(--sand); color: var(--teal-700); display: grid; place-items: center; }
 .srv__body { flex-grow: 1; }
 .srv__body h3 { font-size: 1.12rem; margin-bottom: 8px; }
 .srv__body p { color: var(--muted); font-size: 0.94rem; }
 .srv__foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-top: 16px; border-top: 1px solid var(--line); }
-.srv__foot strong { font-size: 1.2rem; color: var(--teal-900); }
+.srv__foot strong { font-size: 1.2rem; color: var(--teal-700); }
 
 /* ===== ОФФЕРЫ (компактная строка) ===== */
 .offers { padding: 16px 0 0; }
 .offers__row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+/* Карточки мягким оранжевым с белым текстом, иконки — фирменным
+   бирюзовым на белой подложке */
 .offer {
   display: flex; align-items: center; gap: 14px; text-align: left; min-width: 0;
-  background: var(--coral-50); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px 18px;
-  transition: border-color 0.25s, box-shadow 0.25s var(--ease);
+  background: var(--coral-soft); color: #fff; border: 1px solid var(--coral-soft);
+  border-radius: var(--radius-sm); padding: 16px 18px;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
-.offer:hover { border-color: var(--coral); box-shadow: var(--shadow-sm); }
-.offer__ic { width: 42px; height: 42px; border-radius: 11px; background: #fff; color: var(--coral-ink); display: grid; place-items: center; flex-shrink: 0; }
+.offer:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.offer__ic { width: 42px; height: 42px; border-radius: 11px; background: #fff; color: var(--teal-700); display: grid; place-items: center; flex-shrink: 0; }
 .offer__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex-grow: 1; }
-.offer__text strong { font-size: 1rem; }
-.offer__text small { color: var(--muted); font-size: 0.84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.offer__text strong { font-size: 1rem; color: #fff; }
+.offer__text small { color: #fff; font-size: 0.84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 620px) {
   /* на телефоне место есть — пусть подпись переносится, а не обрезается */
   .offer__text small { white-space: normal; overflow: visible; line-height: 1.35; }
 }
-.offer__note { font-weight: 800; color: var(--teal-900); white-space: nowrap; }
+.offer__note { font-weight: 800; color: #fff; white-space: nowrap; }
 
 /* ===== СТАТИСТИКА ===== */
 .stats { padding: clamp(28px, 3.5vw, 44px) 0; }
@@ -71,7 +74,7 @@
   background: var(--sand); border-radius: var(--radius); padding: 10px;
 }
 .stats__item { padding: 26px 24px; text-align: center; }
-.stats__value { font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; color: var(--teal-900); letter-spacing: -0.03em; }
+.stats__value { font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; color: var(--teal-700); letter-spacing: -0.03em; }
 .stats__value span { color: var(--teal-700); }
 .stats__label { color: var(--muted); font-size: 1rem; margin-top: 6px; }
 
@@ -93,7 +96,7 @@
 /* ===== ПРЕИМУЩЕСТВА ===== */
 .adv__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .adv__item { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
-.adv__ic { width: 44px; height: 44px; border-radius: 12px; background: var(--teal-50); color: var(--teal-700); display: grid; place-items: center; margin-bottom: 12px; }
+.adv__ic { width: 44px; height: 44px; border-radius: 12px; background: var(--sand); color: var(--teal-700); display: grid; place-items: center; margin-bottom: 12px; }
 .adv__item h3 { font-size: 1.08rem; margin-bottom: 8px; }
 .adv__item p { color: var(--muted); font-size: 0.92rem; }
 
@@ -122,10 +125,10 @@
   display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); align-items: center;
 }
 .cta__copy h2 { margin: 16px 0 14px; max-width: 16ch; }
-.cta__copy p { color: rgba(255, 255, 255, 0.88); font-size: 1.08rem; max-width: 46ch; }
+.cta__copy p { color: #fff; font-size: 1.08rem; max-width: 46ch; }
 .cta__phone { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.5rem; color: #fff; margin-top: 26px; }
 .cta__phone svg { color: var(--sky); }
-.cta__hours { display: flex; align-items: center; gap: 10px; color: rgba(255, 255, 255, 0.75); font-size: 0.95rem; margin-top: 12px; }
+.cta__hours { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 0.95rem; margin-top: 12px; }
 .cta__hours svg { color: var(--sky); }
 
 @media (max-width: 980px) {
@@ -191,7 +194,7 @@
   background: var(--sand); border-radius: var(--radius); padding: 22px;
   display: flex; flex-direction: column; gap: 4px;
 }
-.ministat strong { font-size: clamp(1.6rem, 2.4vw, 2.2rem); font-weight: 800; color: var(--teal-900); letter-spacing: -0.03em; }
+.ministat strong { font-size: clamp(1.6rem, 2.4vw, 2.2rem); font-weight: 800; color: var(--teal-700); letter-spacing: -0.03em; }
 .ministat strong span { color: var(--teal-700); }
 .ministat small { color: var(--muted); font-size: 0.94rem; }
 
@@ -204,7 +207,7 @@
 .navcard:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
 .navcard__ic {
   width: 50px; height: 50px; border-radius: 14px; margin-bottom: 16px;
-  background: var(--teal-50); color: var(--teal-700); display: grid; place-items: center;
+  background: var(--sand); color: var(--teal-700); display: grid; place-items: center;
 }
 .navcard h3 { font-size: 1.12rem; margin-bottom: 8px; }
 .navcard p { color: var(--muted); font-size: 0.94rem; flex-grow: 1; }

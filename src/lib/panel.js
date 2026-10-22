@@ -222,12 +222,17 @@ export async function loadContent() {
     CENTERS: centry.map(toCenter),
     LINKS: svyaz
       ? {
-          max: svyaz.max || (svyaz.whatsapp ? `https://max.ru/${String(svyaz.whatsapp).replace(/\D/g, '')}` : null),
+          // в ссылку пропускаем только адрес сайта: так в кнопку не попадёт ничего лишнего
+          max: /^https?:\/\//i.test(String(svyaz.max || '')) ? svyaz.max : null,
           telegram: svyaz.telegram
             ? (String(svyaz.telegram).startsWith('http') ? svyaz.telegram : `https://t.me/${String(svyaz.telegram).replace(/^@/, '')}`)
             : null,
           vk: svyaz.vk
             ? (String(svyaz.vk).startsWith('http') ? svyaz.vk : `https://vk.com/${encodeURIComponent(String(svyaz.vk).replace(/^@/, '').trim())}`)
+            : null,
+          // номер в любом виде: 8 (931)… и +7 931… дают одну ссылку wa.me/7931…
+          whatsapp: svyaz.whatsapp
+            ? `https://wa.me/${String(svyaz.whatsapp).replace(/\D/g, '').replace(/^8(\d{10})$/, '7$1')}`
             : null,
           viber: svyaz.viber ? `viber://chat?number=${String(svyaz.viber).replace(/\D/g, '')}` : null,
           phone: svyaz.call_phone || null,

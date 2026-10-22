@@ -18,7 +18,7 @@
   background-image:
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px),
-    linear-gradient(115deg, transparent 46%, var(--teal-50) 46%, var(--teal-50) 54%, transparent 54%);
+    linear-gradient(115deg, transparent 46%, var(--sand) 46%, var(--sand) 54%, transparent 54%);
   background-size: 46px 46px, 46px 46px, 100% 100%;
   opacity: 0.9;
 }
@@ -34,7 +34,7 @@
 .ymap__hit { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; }
 .ymap__hint {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--teal-700); color: #fff; font-weight: 700; font-size: 0.94rem;
+  background: var(--coral-soft); color: var(--ink); font-weight: 700; font-size: 0.94rem;
   padding: 12px 20px; border-radius: 999px; box-shadow: var(--shadow);
   opacity: 0; transform: translateY(6px);
   transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
@@ -62,7 +62,7 @@
 /* Развёрнутая карта */
 .ymap-full {
   position: fixed; inset: 0; z-index: 120;
-  background: rgba(20, 48, 47, 0.55); backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(4px);
   display: grid; place-items: center; padding: 20px;
   animation: ymap-in 0.2s var(--ease);
 }

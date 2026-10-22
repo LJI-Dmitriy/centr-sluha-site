@@ -1,32 +1,28 @@
-/* Фирменные цвета «Точки слуха» по брендбуку: бирюзовый 397c7b,
-   светлая бирюза 8ec8ba, оранжевый e5771e, светло-серый f4f4f4.
-   Крупные плашки (шапка, слайдер, подвал) залиты бирюзовым, оранжевый —
-   только акценты: рубрики, акции, скидки. */
+/* Фирменные цвета «Точки слуха» — четыре из брендбука: бирюзовый 397c7b,
+   светлая бирюза 8ec8ba, оранжевый e5771e, светло-серый f4f4f4, и мягкий
+   оранжевый fea254, который центр прислал для крупных оранжевых плашек.
+   Производных оттенков нет. Кроме них только белый и нейтральный серый
+   (без цветового подмеса) — для текста и тонких линий. */
 :root {
-  --teal-900: #2c6160;  /* бирюзовый потемнее: текст и ссылки на белом */
-  --teal-700: #397c7b;  /* фирменный бирюзовый: кнопки и заливки */
-  --teal-600: #468e8c;  /* светлее, для наведения */
+  --teal-700: #397c7b;  /* фирменный бирюзовый: кнопки, заливки, ссылки */
   --teal-300: #8ec8ba;  /* фирменная светлая бирюза */
-  --teal-50:  #eaf5f2;  /* очень светлая подложка */
-  --sand:     #f4f4f4;  /* светло-серый фон секций */
-  --ink:      #1d2422;  /* основной текст */
-  --muted:    #5a635f;  /* вторичный текст */
-  --line:     #e2e8e7;
+  --sand:     #f4f4f4;  /* фирменный светло-серый: фон секций и подложки */
+  --ink:      #1f1f1f;  /* основной текст */
+  --muted:    #5e5e5e;  /* вторичный текст */
+  --line:     #e6e6e6;  /* тонкие линии и рамки */
   --white:    #ffffff;
   --gold:     #397c7b;
-  --gold-50:  #eaf5f2;
-  --coral:      #e5771e;  /* фирменный оранжевый: акции и скидки */
-  --coral-ink:  #a85310;  /* тот же оранжевый для текста: на белом читается */
-  --coral-50:   #fdeee0;
-  --sky:      #8ec8ba;  /* фирменная светлая бирюза: акцент на тёмном фоне */
+  --coral:    #e5771e;  /* фирменный оранжевый: логотип, главная кнопка записи, акценты */
+  --coral-soft: #fea254; /* мягкий оранжевый: карточки под слайдером, бейджи акций, кнопка карты */
+  --sky:      #8ec8ba;  /* светлая бирюза: акцент на бирюзовом фоне */
 
   /* Содержимое стоит по центру страницы, как было изначально */
   --maxw: 1280px;
   --gutter: clamp(20px, 3vw, 64px); /* боковые поля: одно значение на весь сайт */
   --radius: 20px;
   --radius-sm: 14px;
-  --shadow: 0 18px 50px -24px rgba(31, 36, 48, 0.28);
-  --shadow-sm: 0 8px 24px -16px rgba(31, 36, 48, 0.34);
+  --shadow: 0 18px 50px -24px rgba(0, 0, 0, 0.28);
+  --shadow-sm: 0 8px 24px -16px rgba(0, 0, 0, 0.34);
   --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-display: 'Montserrat', system-ui, sans-serif; /* заголовки тем же шрифтом */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -36,7 +32,7 @@
 
 /* Видно, где курсор при работе с клавиатуры (мышью обводка не появляется) */
 :focus-visible {
-  outline: 3px solid var(--teal-600);
+  outline: 3px solid var(--teal-700);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -75,7 +71,8 @@ a { color: inherit; text-decoration: none; }
 }
 img { max-width: 100%; display: block; }
 ul { list-style: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
+/* color: inherit обязателен — без него Safari на iPhone красит текст кнопок в системный синий */
+button { font-family: inherit; color: inherit; cursor: pointer; border: none; background: none; }
 
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.14; letter-spacing: -0.03em; font-weight: 800; }
 h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
@@ -101,7 +98,7 @@ h3 { font-size: 1.25rem; }
   font-size: 0.76rem; font-weight: 700; letter-spacing: 0.16em;
   text-transform: uppercase;
 }
-.eyebrow--light { color: #fff; }   /* на фирменном синем читается только белый */
+.eyebrow--light { color: #fff; }   /* на фирменном бирюзовом читается только белый */
 
 .lead { color: var(--muted); font-size: 1.18rem; line-height: 1.7; max-width: 56ch; }
 
@@ -113,10 +110,10 @@ h3 { font-size: 1.25rem; }
   white-space: nowrap;
 }
 .btn-primary { background: var(--teal-700); color: #fff; box-shadow: var(--shadow-sm); }
-.btn-primary:hover { background: var(--teal-900); transform: translateY(-2px); }
+.btn-primary:hover { background: var(--teal-700); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--gold); }
-.btn-ghost:hover { background: var(--gold-50); border-color: var(--gold); color: var(--teal-900); }
-.btn-light { background: #fff; color: var(--teal-900); }
+.btn-ghost:hover { background: var(--sand); border-color: var(--gold); color: var(--teal-700); }
+.btn-light { background: #fff; color: var(--teal-700); }
 .btn-light:hover { transform: translateY(-2px); }
 .btn-sm { padding: 10px 20px; font-size: 0.92rem; border-radius: 999px; }
 .btn-block { width: 100%; }
@@ -139,7 +136,7 @@ h3 { font-size: 1.25rem; }
 }
 .head-row .section-head { margin-bottom: 0; }
 .link-more { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--teal-700); }
-.link-more:hover { color: var(--teal-900); }
+.link-more:hover { color: var(--coral); }
 
 .grid { display: grid; gap: 24px; }
 /* обёртка анимации не должна ломать выравнивание: тянем её на всю высоту ячейки */
@@ -180,7 +177,7 @@ h3 { font-size: 1.25rem; }
 /* снимок на всю плитку: без белой рамки и с такими же скруглениями, как у плитки */
 .ph--cover { padding: 0; }
 .ph--cover img { border-radius: inherit; }
-.ph--on-dark { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25); }
+.ph--on-dark { box-shadow: 0 0 0 1px var(--teal-300); }
 .ph--flat { border-radius: 0; }
 
 /* Почта: перенос только перед «собакой», домен целиком */
@@ -192,10 +189,10 @@ h3 { font-size: 1.25rem; }
 .tag {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 0.76rem; font-weight: 700; letter-spacing: 0.04em;
-  color: var(--teal-700); background: var(--teal-50);
+  color: var(--teal-700); background: var(--sand);
   padding: 6px 12px; border-radius: 999px;
 }
-.tag--accent { color: var(--coral-ink); background: var(--coral-50); }
+.tag--accent { color: var(--coral); background: var(--sand); }
 
 /* Появление при скролле */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }

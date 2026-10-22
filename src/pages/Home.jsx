@@ -177,7 +177,7 @@ export default function Home() {
               <div className="acard">
                 <h3>Написать</h3>
                 <p className="acard__note">Если звонить неудобно — ответим в мессенджере в рабочее время.</p>
-                <Messengers links={LINKS} mail={SITE.email} />
+                <Messengers links={LINKS} kinds={['max', 'telegram']} />
               </div>
             </Reveal>
 

@@ -19,12 +19,8 @@
 }
 .msgr__btn:hover { border-color: var(--brand); background: var(--sand); }
 
-/* фирменные цвета: тем же цветом закрашена внутренняя деталь значка */
-.msgr__btn--max { --brand: #1b7ced; }
-.msgr__btn--telegram { --brand: #229ed9; }
-.msgr__btn--viber { --brand: #7360f2; }
-.msgr__btn--vk { --brand: #0077ff; }
-.msgr__btn--mail { --brand: var(--teal-700); }
+/* точка — цветом сайта: синий и фиолетовый мессенджеров выбивались из палитры */
+.msgr__btn { --brand: var(--teal-700); }
 
 /* Крупный вариант — на странице контактов */
 .msgr--big { grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; }
@@ -35,5 +31,5 @@
 }
 
 /* На тёмном фоне подвала — те же кнопки, но прозрачные */
-.ftr .msgr__btn { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.9); }
-.ftr .msgr__btn:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.3); }
+.ftr .msgr__btn { --brand: var(--teal-300); background: none; border-color: var(--teal-300); color: #fff; }
+.ftr .msgr__btn:hover { background: none; border-color: #fff; }

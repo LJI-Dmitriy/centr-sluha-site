@@ -18,7 +18,7 @@ export default function Footer() {
           <div className="logo">
             <span className="logo__mark logo__mark--light"><Logo size={44} /></span>
             <span className="logo__text" style={{ color: '#fff' }}>
-              {SITE.name}<small style={{ color: 'rgba(255,255,255,.6)' }}>{SITE.tagline}</small>
+              {SITE.name}<small>{SITE.tagline}</small>
             </span>
           </div>
           <p className="ftr__about">Проверяем слух, подбираем и настраиваем слуховые аппараты. Центр в Краснодаре, выезд на дом по Краснодарскому краю и Адыгее.</p>
@@ -49,7 +49,7 @@ export default function Footer() {
         <div className="ftr__col">
           <h4>Написать нам</h4>
           <p className="ftr__hint">Ответим в рабочее время. Заявку можно отправить и без звонка.</p>
-          <Messengers links={LINKS} mail={SITE.email} />
+          <Messengers links={LINKS} mail={SITE.email} kinds={['max', 'telegram', 'whatsapp', 'vk', 'mail']} />
         </div>
       </div>
 

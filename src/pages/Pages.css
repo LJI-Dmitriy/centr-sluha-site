@@ -3,7 +3,7 @@
 /* Полоса-призыв */
 .band {
   display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
-  background: var(--gold-50); border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--sand); border: 1px solid var(--line); border-radius: var(--radius);
   padding: clamp(28px, 4vw, 44px);
 }
 .band h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
@@ -17,9 +17,9 @@
   transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 .chip small { color: var(--muted); font-weight: 500; font-size: 0.82rem; }
-.chip:hover { border-color: var(--teal-600); color: var(--teal-700); }
+.chip:hover { border-color: var(--teal-700); color: var(--teal-700); }
 .chip.is-active { background: var(--teal-700); border-color: var(--teal-700); color: #fff; }
-.chip.is-active small { color: rgba(255, 255, 255, 0.7); }
+.chip.is-active small { color: #fff; }
 
 /* ===== Каталог ===== */
 .catalog { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 32px; align-items: start; }
@@ -51,7 +51,7 @@
   width: 100%; min-width: 0; font-family: inherit; font-size: 0.95rem; padding: 10px 12px;
   border: 1px solid var(--line); border-radius: 10px;
 }
-.filters__price input:focus { outline: none; border-color: var(--teal-600); box-shadow: 0 0 0 4px var(--teal-50); }
+.filters__price input:focus { outline: none; border-color: var(--teal-700); box-shadow: 0 0 0 4px var(--sand); }
 .filters__help { background: var(--sand); border-radius: var(--radius-sm); padding: 20px; }
 .filters__help h4 { font-size: 1rem; margin-bottom: 8px; }
 .filters__help p { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
@@ -76,7 +76,7 @@
   min-width: 46px; height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line);
   background: #fff; font-weight: 700; color: var(--ink); transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
-.pager__btn:hover { border-color: var(--teal-600); color: var(--teal-700); }
+.pager__btn:hover { border-color: var(--teal-700); color: var(--teal-700); }
 .pager__btn.is-active { background: var(--teal-700); border-color: var(--teal-700); color: #fff; }
 .pager__btn--next, .pager__btn--prev { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .pager__btn:disabled { opacity: 0.4; cursor: default; }
@@ -102,7 +102,7 @@
 .prod__short { color: var(--muted); font-size: 1.05rem; margin: 16px 0 24px; }
 .prod__pricebox { background: var(--sand); border-radius: var(--radius); padding: 26px; }
 .prod__price { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.prod__price strong { font-size: 2.1rem; letter-spacing: -0.03em; color: var(--teal-900); }
+.prod__price strong { font-size: 2.1rem; letter-spacing: -0.03em; color: var(--teal-700); }
 /* «Цена по запросу» — длиннее суммы, поэтому мельче */
 .prod__price--ask { font-size: 1.45rem !important; }
 .prod__price s { color: var(--muted); font-size: 1.05rem; }
@@ -110,12 +110,12 @@
 .prod__points { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 22px; }
 .prod__points li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.98rem; font-weight: 500; }
 .prod__points svg { color: #fff; background: var(--teal-700); border-radius: 50%; padding: 3px; width: 22px; height: 22px; flex-shrink: 0; }
-.prod__attr-link { color: var(--teal-900); text-decoration: underline; text-underline-offset: 3px; }
+.prod__attr-link { color: var(--teal-700); text-decoration: underline; text-underline-offset: 3px; }
 .prod__attr-link:hover { color: var(--teal-700); }
 .prod__stock {
   display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
   padding: 12px 16px; border-radius: var(--radius-sm);
-  background: var(--coral-50); color: var(--coral-ink); font-weight: 600; font-size: 0.95rem;
+  background: var(--sand); color: var(--coral); font-weight: 600; font-size: 0.95rem;
 }
 .prod__stock svg { flex-shrink: 0; }
 .prod__actions { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -124,7 +124,7 @@
 /* «Заказать звонок» — запасной путь, поэтому ссылкой, а не второй кнопкой рядом с записью */
 .prod__contact { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
 .prod__call { font-weight: 700; color: var(--teal-700); text-decoration: underline; text-underline-offset: 3px; }
-.prod__call:hover { color: var(--teal-900); }
+.prod__call:hover { color: var(--teal-700); }
 .prod__phone { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--teal-700); }
 .prod__meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; }
 .prod__meta li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.92rem; font-weight: 600; }
@@ -149,7 +149,7 @@
 
 .terms__n {
   width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
-  background: var(--teal-50); color: var(--teal-700); font-weight: 800;
+  background: var(--sand); color: var(--teal-700); font-weight: 800;
   display: grid; place-items: center;
 }
 
@@ -212,7 +212,7 @@
 .prose h2 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); margin: 34px 0 16px; }
 .prose__list { display: flex; flex-direction: column; gap: 10px; margin: 0 0 22px; }
 .prose__list li { position: relative; padding-left: 26px; color: var(--muted); }
-.prose__list li::before { content: ''; position: absolute; left: 6px; top: 12px; width: 7px; height: 7px; border-radius: 50%; background: var(--teal-600); }
+.prose__list li::before { content: ''; position: absolute; left: 6px; top: 12px; width: 7px; height: 7px; border-radius: 50%; background: var(--teal-700); }
 .prose__figure { margin: 28px 0; }
 .prose__figure figcaption, .prose__cap { display: block; margin-top: 10px; color: var(--muted); font-size: 0.86rem; }
 .prose__ph { margin-top: 26px; max-width: 420px; }
@@ -255,7 +255,7 @@
 .promo__media .ph { border-radius: 0; }
 .promo__badge {
   position: absolute; top: 14px; left: 14px;
-  background: var(--coral); color: var(--ink); font-weight: 800; font-size: 0.9rem;
+  background: var(--coral-soft); color: var(--ink); font-weight: 800; font-size: 0.9rem;
   padding: 7px 14px; border-radius: 999px;
 }
 .promo__body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -299,15 +299,15 @@
 .cart__body p { color: var(--muted); font-size: 0.92rem; }
 .cart__meta { color: var(--muted); font-size: 0.84rem; }
 .cart__price { text-align: right; }
-.cart__price strong { display: block; font-size: 1.2rem; color: var(--teal-900); }
+.cart__price strong { display: block; font-size: 1.2rem; color: var(--teal-700); }
 .cart__price s { color: var(--muted); font-size: 0.9rem; }
 .cart__del { width: 38px; height: 38px; border-radius: 10px; color: var(--muted); display: grid; place-items: center; transition: background 0.2s, color 0.2s; }
-.cart__del:hover { background: var(--sand); color: var(--coral-ink); }
+.cart__del:hover { background: var(--sand); color: var(--coral); }
 .cart__side { position: sticky; top: 110px; }
 .cart__total { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid var(--line); color: var(--muted); }
 .cart__total strong { color: var(--ink); font-size: 1.1rem; }
 .cart-empty { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: clamp(32px, 6vw, 72px) 0; }
-.cart-empty__ic { width: 72px; height: 72px; border-radius: 50%; background: var(--teal-50); color: var(--teal-700); display: grid; place-items: center; }
+.cart-empty__ic { width: 72px; height: 72px; border-radius: 50%; background: var(--sand); color: var(--teal-700); display: grid; place-items: center; }
 .cart-empty p { color: var(--muted); margin-bottom: 10px; }
 
 /* ===== Контакты ===== */
@@ -318,7 +318,7 @@
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px;
   display: flex; flex-direction: column; gap: 6px; align-items: flex-start;
 }
-.cline__ic { width: 48px; height: 48px; border-radius: 14px; background: var(--teal-50); color: var(--teal-700); display: grid; place-items: center; margin-bottom: 8px; }
+.cline__ic { width: 48px; height: 48px; border-radius: 14px; background: var(--sand); color: var(--teal-700); display: grid; place-items: center; margin-bottom: 8px; }
 .cline small { color: var(--muted); font-size: 0.82rem; }
 .cline a, .cline > span {
   font-weight: 700; font-size: clamp(0.92rem, 1.1vw, 1.05rem);

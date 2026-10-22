@@ -7,9 +7,9 @@
 .pcard__media { position: relative; display: block; }
 .pcard__media .ph { border-radius: 0; }
 .pcard__tag { position: absolute; top: 14px; left: 14px; background: #fff; }
-.pcard__tag--net { color: var(--coral-ink); background: var(--coral-50); }
+.pcard__tag--net { color: var(--coral); background: var(--sand); }
 .pcard__tag--sale { color: var(--ink); background: var(--coral); }
-.pcard__tag--pod_zakaz { color: var(--coral-ink); background: var(--coral-50); }
+.pcard__tag--pod_zakaz { color: var(--coral); background: var(--sand); }
 .pcard__body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex-grow: 1; }
 .pcard__body h3 { font-size: 1.15rem; margin-bottom: 8px; }
 .pcard__body h3 a:hover { color: var(--teal-700); text-decoration: underline; text-underline-offset: 3px; }
@@ -18,7 +18,7 @@
 .pcard__points li { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--ink); }
 .pcard__points svg { color: #fff; background: var(--teal-700); border-radius: 50%; padding: 3px; width: 20px; height: 20px; flex-shrink: 0; }
 .pcard__price { display: flex; align-items: baseline; gap: 10px; margin-top: auto; padding-top: 4px; }
-.pcard__price strong { font-size: 1.3rem; letter-spacing: -0.02em; color: var(--teal-900); }
+.pcard__price strong { font-size: 1.3rem; letter-spacing: -0.02em; color: var(--teal-700); }
 /* «Цена по запросу» — длиннее суммы, поэтому мельче, чтобы не ломать карточку */
 .pcard__price--ask { font-size: 1rem !important; font-weight: 700; }
 .pcard__price s { color: var(--muted); font-size: 0.95rem; }
@@ -29,7 +29,7 @@
   display: grid; place-items: center; color: var(--teal-700);
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
-.pcard__cart:hover { border-color: var(--teal-700); background: var(--teal-50); }
+.pcard__cart:hover { border-color: var(--teal-700); background: var(--sand); }
 .pcard__cart.is-in { background: var(--teal-700); border-color: var(--teal-700); color: #fff; }
 
 /* Телефон: карточка каталога — компактная строка, чтобы на экран влезало
