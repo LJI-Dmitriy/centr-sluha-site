@@ -39,58 +39,9 @@ export default function Header() {
 
       <div className="container hdr__inner">
         <Link to="/" className="logo" aria-label={SITE.name}>
-          <span className="logo__mark"><Logo size={44} /></span>
+          <span className="logo__mark"><Logo size={54} /></span>
           <span className="logo__text">{SITE.name}<small>{SITE.tagline}</small></span>
         </Link>
-
-        <nav className={`nav ${open ? 'nav--open' : ''}`}>
-          <div className={`nav__item nav__item--drop ${catOpen ? 'is-open' : ''}`}>
-            <NavLink to="/catalog" className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
-              {NAV[0].label}
-            </NavLink>
-            {/* на телефоне разделы каталога прячем под стрелку, иначе меню на два экрана */}
-            <button
-              className="nav__more"
-              onClick={() => setCatOpen((v) => !v)}
-              aria-expanded={catOpen}
-              aria-label="Разделы каталога"
-            >
-              <Icon name="arrow" size={18} />
-            </button>
-
-            {/* Меню каталога: бренд, тип корпуса, особенности, стоимость */}
-            <div className="megamenu">
-              {/* понятно, что колонки ниже — про аппараты: остальные разделы каталога
-                  вынесены отдельным столбцом */}
-              <Link to="/catalog" className="megamenu__title">Слуховые аппараты</Link>
-              <div className="megamenu__cols">
-                {CATALOG_MENU.map((col) => (
-                  <div className="megamenu__col" key={col.title}>
-                    <h4>{col.title}</h4>
-                    {col.items.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
-                  </div>
-                ))}
-              </div>
-              <div className="megamenu__more">
-                {CATALOG_EXTRA.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
-              </div>
-
-              <div className="megamenu__foot">
-                <Link to={CERT_LINK.to} className="megamenu__cert">
-                  <Icon name="doc" size={17} /> {CERT_LINK.label}
-                </Link>
-                <button className="btn btn-primary btn-sm" onClick={() => openForm('visit')}>Записаться на приём</button>
-              </div>
-            </div>
-          </div>
-
-          {NAV.slice(1).map((i) => (
-            <NavLink key={i.to} to={i.to} className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
-              {i.label}
-            </NavLink>
-          ))}
-          <a href={SITE.phoneHref} className="nav__phone">{SITE.phone}</a>
-        </nav>
 
         <form
           className="hdr__search"
@@ -113,6 +64,61 @@ export default function Header() {
           <button className={`burger ${open ? 'burger--x' : ''}`} onClick={() => setOpen((v) => !v)} aria-label="Меню">
             <span /><span /><span />
           </button>
+        </div>
+      </div>
+
+      {/* меню — отдельной строкой под названием, как у as.clinic: так название
+          центра стоит крупно и не теснит пункты меню. На телефоне это выезжающая панель */}
+      <div className="hdr__navrow">
+        <div className="container">
+          <nav className={`nav ${open ? 'nav--open' : ''}`}>
+            <div className={`nav__item nav__item--drop ${catOpen ? 'is-open' : ''}`}>
+              <NavLink to="/catalog" className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
+                {NAV[0].label}
+              </NavLink>
+              {/* на телефоне разделы каталога прячем под стрелку, иначе меню на два экрана */}
+              <button
+                className="nav__more"
+                onClick={() => setCatOpen((v) => !v)}
+                aria-expanded={catOpen}
+                aria-label="Разделы каталога"
+              >
+                <Icon name="arrow" size={18} />
+              </button>
+
+              {/* Меню каталога: бренд, тип корпуса, особенности, стоимость */}
+              <div className="megamenu">
+                {/* понятно, что колонки ниже — про аппараты: остальные разделы каталога
+                    вынесены отдельным столбцом */}
+                <Link to="/catalog" className="megamenu__title">Слуховые аппараты</Link>
+                <div className="megamenu__cols">
+                  {CATALOG_MENU.map((col) => (
+                    <div className="megamenu__col" key={col.title}>
+                      <h4>{col.title}</h4>
+                      {col.items.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
+                    </div>
+                  ))}
+                </div>
+                <div className="megamenu__more">
+                  {CATALOG_EXTRA.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
+                </div>
+
+                <div className="megamenu__foot">
+                  <Link to={CERT_LINK.to} className="megamenu__cert">
+                    <Icon name="doc" size={17} /> {CERT_LINK.label}
+                  </Link>
+                  <button className="btn btn-primary btn-sm" onClick={() => openForm('visit')}>Записаться на приём</button>
+                </div>
+              </div>
+            </div>
+
+            {NAV.slice(1).map((i) => (
+              <NavLink key={i.to} to={i.to} className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
+                {i.label}
+              </NavLink>
+            ))}
+            <a href={SITE.phoneHref} className="nav__phone">{SITE.phone}</a>
+          </nav>
         </div>
       </div>
     </header>

@@ -255,7 +255,7 @@
 .promo__media .ph { border-radius: 0; }
 .promo__badge {
   position: absolute; top: 14px; left: 14px;
-  background: var(--coral-soft); color: var(--ink); font-weight: 800; font-size: 0.9rem;
+  background: var(--coral-soft); color: #fff; font-weight: 800; font-size: 0.9rem;
   padding: 7px 14px; border-radius: 999px;
 }
 .promo__body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -347,7 +347,7 @@
 .legal__toc a:hover { color: var(--teal-700); }
 .legal__updated { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
 .legal__updated svg { color: var(--teal-700); }
-.legal__body section { margin-bottom: 12px; scroll-margin-top: 120px; }
+.legal__body section { margin-bottom: 12px; scroll-margin-top: 160px; } /* под шапкой с меню */
 .legal__next {
   display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
   margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--line); color: var(--muted);

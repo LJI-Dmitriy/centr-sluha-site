@@ -48,11 +48,11 @@
 /* ===== ОФФЕРЫ (компактная строка) ===== */
 .offers { padding: 16px 0 0; }
 .offers__row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-/* Карточки мягким оранжевым с белым текстом, иконки — фирменным
-   бирюзовым на белой подложке */
+/* Карточки фирменной тёмной бирюзой с белым текстом, как просил центр;
+   иконки — бирюзовые на белой подложке */
 .offer {
   display: flex; align-items: center; gap: 14px; text-align: left; min-width: 0;
-  background: var(--coral-soft); color: #fff; border: 1px solid var(--coral-soft);
+  background: var(--teal-700); color: #fff; border: 1px solid var(--teal-700);
   border-radius: var(--radius-sm); padding: 16px 18px;
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }

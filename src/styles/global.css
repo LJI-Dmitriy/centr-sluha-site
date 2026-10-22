@@ -1,12 +1,12 @@
-/* Фирменные цвета «Точки слуха» — четыре из брендбука: бирюзовый 397c7b,
-   светлая бирюза 8ec8ba, оранжевый e5771e, светло-серый f4f4f4, и мягкий
-   оранжевый fea254, который центр прислал для крупных оранжевых плашек.
-   Производных оттенков нет. Кроме них только белый и нейтральный серый
-   (без цветового подмеса) — для текста и тонких линий. */
+/* Фирменные цвета «Точки слуха»: из брендбука бирюзовый 397c7b, светлая
+   бирюза 8ec8ba и оранжевый e5771e; мягкий оранжевый fea254, который прислал
+   центр; светлая мята e8f4f1 — фон разделов вместо серого f4f4f4, центр выбрал
+   её по варианту «Северный» (это 8ec8ba на 20% поверх белого). Кроме них только
+   белый и нейтральный серый (без цветового подмеса) — для текста и тонких линий. */
 :root {
-  --teal-700: #397c7b;  /* фирменный бирюзовый: кнопки, заливки, ссылки */
+  --teal-700: #397c7b;  /* фирменный бирюзовый: заголовки, заливки, ссылки */
   --teal-300: #8ec8ba;  /* фирменная светлая бирюза */
-  --sand:     #f4f4f4;  /* фирменный светло-серый: фон секций и подложки */
+  --sand:     #e8f4f1;  /* светлая мята: фон разделов, шапок страниц, полей и подложек */
   --ink:      #1f1f1f;  /* основной текст */
   --muted:    #5e5e5e;  /* вторичный текст */
   --line:     #e6e6e6;  /* тонкие линии и рамки */
@@ -56,7 +56,8 @@ body {
   font-family: var(--font-sans);
   color: var(--ink);
   background: var(--white);
-  font-size: 1.0625rem;
+  /* крупнее обычного, как у сетей слухопротезирования: аудитория в основном пожилая */
+  font-size: 1.125rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
@@ -74,7 +75,8 @@ ul { list-style: none; }
 /* color: inherit обязателен — без него Safari на iPhone красит текст кнопок в системный синий */
 button { font-family: inherit; color: inherit; cursor: pointer; border: none; background: none; }
 
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.14; letter-spacing: -0.03em; font-weight: 800; }
+/* заголовки бирюзовые — как в варианте «Северный», который центр взял за образец */
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.14; letter-spacing: -0.03em; font-weight: 800; color: var(--teal-700); }
 h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
 h2 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); }
 h3 { font-size: 1.25rem; }
@@ -87,6 +89,8 @@ h3 { font-size: 1.25rem; }
 
 .section { padding: clamp(40px, 5.5vw, 72px) 0; }
 .section--sand { background: var(--sand); }
+/* на мятном фоне белые карточки выделяются сами — серая рамка не нужна */
+.section--sand .card, .section--sand .acard, .section--sand .pcard { border-color: #fff; }
 .section--dark { background: var(--teal-700); color: #fff; }
 .section--tight { padding-top: 0; }
 
@@ -100,7 +104,7 @@ h3 { font-size: 1.25rem; }
 }
 .eyebrow--light { color: #fff; }   /* на фирменном бирюзовом читается только белый */
 
-.lead { color: var(--muted); font-size: 1.18rem; line-height: 1.7; max-width: 56ch; }
+.lead { color: var(--muted); font-size: 1.25rem; line-height: 1.7; max-width: 56ch; }
 
 /* Кнопки */
 .btn {
@@ -109,7 +113,8 @@ h3 { font-size: 1.25rem; }
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s, border-color 0.25s, color 0.25s;
   white-space: nowrap;
 }
-.btn-primary { background: var(--teal-700); color: #fff; box-shadow: var(--shadow-sm); }
+/* кнопка записи — фирменным оранжевым везде, при наведении становится бирюзовой */
+.btn-primary { background: var(--coral); color: #fff; box-shadow: var(--shadow-sm); }
 .btn-primary:hover { background: var(--teal-700); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--gold); }
 .btn-ghost:hover { background: var(--sand); border-color: var(--gold); color: var(--teal-700); }

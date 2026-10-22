@@ -13,7 +13,7 @@
     height: 50px; border-radius: 12px; font-weight: 700; font-size: 1rem;
   }
   .mbar__call { background: var(--sand); color: var(--teal-700); }
-  .mbar__book { background: var(--teal-700); color: #fff; }
+  .mbar__book { background: var(--coral); color: #fff; } /* как все кнопки записи */
 
   /* чтобы панель не перекрывала конец страницы */
   body { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
