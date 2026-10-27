@@ -20,6 +20,7 @@ export default function MapEmbed({ coords = SITE.coords, address = SITE.address,
 
   const [lat, lon] = coords
   const point = `${lon},${lat}`
+  // цвет метки виджет Яндекса не меняет: при любом коде стиля она синяя
   const src = (z) => `https://yandex.ru/map-widget/v1/?ll=${point}&z=${z}&pt=${point},pm2rdm`
   const full = `https://yandex.ru/maps/?ll=${point}&z=${zoom}&pt=${point}`
 

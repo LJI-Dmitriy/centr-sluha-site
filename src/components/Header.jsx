@@ -6,10 +6,14 @@ import Icon from './Icon'
 import Logo from './Logo'
 import { useRequestForm } from './RequestModal'
 import { useCart } from './CartContext'
+import { priceValue } from '../lib/price'
 import './Header.css'
 
 export default function Header() {
-  const { SITE } = useContent()
+  const { SITE, CATALOG } = useContent()
+  // колонка «Стоимость» — только когда у моделей есть цены, иначе её ссылки ведут в пустой список
+  const hasPrices = CATALOG.some((i) => priceValue(i.price) > 0)
+  const menu = CATALOG_MENU.filter((col) => hasPrices || !col.needsPrice)
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [catOpen, setCatOpen] = useState(false) // подменю каталога на телефоне
@@ -92,16 +96,18 @@ export default function Header() {
                     вынесены отдельным столбцом */}
                 <Link to="/catalog" className="megamenu__title">Слуховые аппараты</Link>
                 <div className="megamenu__cols">
-                  {CATALOG_MENU.map((col) => (
+                  {menu.map((col) => (
                     <div className="megamenu__col" key={col.title}>
                       <h4>{col.title}</h4>
                       {col.items.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
                     </div>
                   ))}
                 </div>
-                <div className="megamenu__more">
-                  {CATALOG_EXTRA.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
-                </div>
+                {CATALOG_EXTRA.length > 0 && (
+                  <div className="megamenu__more">
+                    {CATALOG_EXTRA.map((i) => <Link key={i.label} to={i.to}>{i.label}</Link>)}
+                  </div>
+                )}
 
                 <div className="megamenu__foot">
                   <Link to={CERT_LINK.to} className="megamenu__cert">

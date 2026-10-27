@@ -7,9 +7,10 @@
 .pcard__media { position: relative; display: block; }
 .pcard__media .ph { border-radius: 0; }
 .pcard__tag { position: absolute; top: 14px; left: 14px; background: #fff; }
-.pcard__tag--net { color: var(--coral); background: var(--sand); }
+/* метка модели — белым по бирюзе: оранжевый текст на белом мелким шрифтом читается плохо */
+.pcard__tag.tag--accent { color: #fff; background: var(--teal-700); }
+.pcard__tag--net, .pcard__tag--pod_zakaz { color: var(--ink); background: var(--coral-soft); }
 .pcard__tag--sale { color: var(--ink); background: var(--coral); }
-.pcard__tag--pod_zakaz { color: var(--coral); background: var(--sand); }
 .pcard__body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex-grow: 1; }
 .pcard__body h3 { font-size: 1.15rem; margin-bottom: 8px; }
 .pcard__body h3 a:hover { color: var(--teal-700); text-decoration: underline; text-underline-offset: 3px; }
@@ -41,7 +42,12 @@
   }
   .pcard__media { align-self: stretch; }
   .pcard__media .ph { height: 100%; min-height: 148px; }
-  .pcard__tag { top: 8px; left: 8px; font-size: 0.68rem; padding: 4px 8px; }
+  /* фото в строке узкое: метка внизу во всю ширину и в одну строку,
+     иначе «Новое поколение» переносится и закрывает аппарат */
+  .pcard__tag {
+    top: auto; bottom: 8px; left: 6px; right: 6px; justify-content: center;
+    white-space: nowrap; font-size: 0.62rem; letter-spacing: 0.02em; padding: 4px 6px;
+  }
   .pcard__body { padding: 14px 16px 14px 14px; }
   .pcard__body h3 { font-size: 1rem; margin-bottom: 4px; }
   .pcard__body > p {
@@ -59,4 +65,5 @@
   /* в горизонтальной ленте на главной карточки остаются вертикальными */
   .grid--swipe .pcard { grid-template-columns: 1fr; }
   .grid--swipe .pcard__media .ph { height: auto; min-height: 0; }
+  .grid--swipe .pcard__tag { top: 8px; bottom: auto; left: 8px; right: auto; font-size: 0.68rem; padding: 4px 8px; }
 }

@@ -13,7 +13,8 @@ export const useContent = () => useContext(Ctx)
 
 const BUILTIN = {
   CATALOG: builtin.CATALOG,
-  HOME_PRODUCTS: builtin.CATALOG.slice(0, 4),
+  // на главную — отмеченные модели, как и в панели; не отмечено ни одной — первые четыре
+  HOME_PRODUCTS: builtin.CATALOG.some((p) => p.onHome) ? builtin.CATALOG.filter((p) => p.onHome) : builtin.CATALOG.slice(0, 4),
   SERVICES: builtin.SERVICES,
   PROMOS: builtin.PROMOS,
   NEWS: builtin.NEWS,

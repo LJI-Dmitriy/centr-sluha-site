@@ -11,6 +11,7 @@ import { useRequestForm } from '../components/RequestModal'
 import { useCart } from '../components/CartContext'
 import NotFound from './NotFound'
 import { CATEGORIES } from '../data/site'
+import { DESCRIPTIONS } from '../data/descriptions'
 import { useContent } from '../components/ContentContext'
 import { priceText } from '../lib/price'
 import './Pages.css'
@@ -26,10 +27,8 @@ const NO_DATA = 'нет данных'
 /* Ссылки ведут в каталог с уже выставленным фильтром: с карточки можно
    уйти к другим аппаратам той же марки или того же типа корпуса. */
 const FORM_LINKS = {
-  'Заушный': '/catalog?cat=bte',
-  'Внутриушной': '/catalog?cat=ite',
-  'Внутриканальный': '/catalog?feature=Внутриканальный',
-  'Канальный': '/catalog?feature=Канальный',
+  'Заушный': '/catalog?form=BTE',
+  'С ресивером в ухе': '/catalog?form=RIE',
 }
 
 /* Характеристики приходят строками (из панели их вводят свободным списком),
@@ -43,7 +42,8 @@ function Attrs({ attrs }) {
     { label: 'Уровень мощности', value: attrs.power },
     { label: 'Тип обработки сигнала', value: attrs.signal },
     { label: 'Количество каналов', value: attrs.channels },
-  ]
+  // чего производитель не сообщает, то не показываем: строка «нет данных» только путает
+  ].filter((r) => r.value && r.value !== NO_DATA)
 
   return (
     <ul className="prod__points">
@@ -71,10 +71,12 @@ export default function Product() {
   if (!item) return <NotFound />
 
   const cat = CATEGORIES.find((c) => c.slug === item.category)
+  // описание приходит из панели; у встроенного каталога оно лежит в отдельном файле
+  const desc = item.desc?.length ? item.desc : DESCRIPTIONS[item.slug] || []
   const missing = item.stock === 'net'
   const related = CATALOG.filter((i) => i.slug !== item.slug).slice(0, 4)
-  // условия приёма относятся к аппаратам: у батареек и услуг их не показываем
-  const isDevice = ['bte', 'ite'].includes(item.category)
+  // условия приёма относятся к аппаратам — у них заполнены поля аппарата
+  const isDevice = Boolean(item.attrs)
   const warranty = (item.specs || []).map(specLine).map((s) => s.match(/^Гарантия\s*[—–:-]\s*(.+)$/i)?.[1]).find(Boolean)
 
   return (
@@ -102,7 +104,7 @@ export default function Product() {
             <div className="prod__info">
               {item.tag && <span className="tag tag--accent">{item.tag}</span>}
               <h1>{item.title}</h1>
-              <div className="prod__sku">Наличие: <strong>{missing ? 'нет в наличии' : 'в центре'}</strong></div>
+              <div className="prod__sku">Наличие: <strong>{missing ? 'нет в наличии' : item.stock === 'pod_zakaz' ? 'под заказ — уточните по телефону' : 'в центре'}</strong></div>
               <p className="prod__short">{item.short}</p>
 
               <div className="prod__pricebox">
@@ -179,7 +181,7 @@ export default function Product() {
           <div className="tabs__panel" role="tabpanel" id="ppanel" aria-labelledby={`ptab-${tab}`}>
             {tab === 'desc' && (
               <div className="prose">
-                {item.desc.map((p, i) => <p key={i}>{p}</p>)}
+                {desc.map((p, i) => <p key={i}>{p}</p>)}
                 <Ph ratio="21 / 9" className="prose__ph" src={item.img} alt={item.title} />
                 <span className="prose__cap">Фото аппарата в комплекте поставки</span>
               </div>

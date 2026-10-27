@@ -33,13 +33,18 @@ const matchesFeature = (i, q) => {
   return hay.includes(q.toLowerCase())
 }
 
+/* Подпись фильтра для заголовка: в адресе стоит слово для поиска («аккумулятор»),
+   а человеку показываем название пункта («Перезаряжаемые») */
+const filterLabel = (param, value) =>
+  FILTERS.find((f) => f.param === param)?.options.find((o) => o.value === value)?.label || value
+
 const PER_PAGE = 6
 
 /* Порядок вывода: значение в адресе → как сортируем список */
 const SORT_MODES = {
   popular: { label: 'По популярности', apply: (list) => list },
-  cheap: { label: 'Сначала дешевле', apply: byPrice(1) },
-  expensive: { label: 'Сначала дороже', apply: byPrice(-1) },
+  cheap: { label: 'Сначала дешевле', apply: byPrice(1), byPrice: true },
+  expensive: { label: 'Сначала дороже', apply: byPrice(-1), byPrice: true },
   fresh: { label: 'Сначала новинки', apply: (list) => [...list].sort((a, b) => Number(Boolean(b.tag)) - Number(Boolean(a.tag))) },
 }
 
@@ -51,6 +56,7 @@ export default function Catalog() {
   const cat = params.get('cat')
   const brand = params.get('brand')
   const price = params.get('price')
+  const form = params.get('form')
   const feature = params.get('feature')
   const query = (params.get('q') || '').trim()
   const sort = SORT_MODES[params.get('sort')] ? params.get('sort') : 'popular'
@@ -60,9 +66,14 @@ export default function Catalog() {
   // на телефоне подбор закрыт: иначе до первого товара пришлось бы листать целый экран
   const [filtersOpen, setFiltersOpen] = useState(false)
 
+  // пока центр не назначил цены, подбор и сортировка по цене ничего бы не нашли — прячем их
+  const hasPrices = CATALOG.some((i) => priceValue(i.price) > 0)
+  const sortModes = Object.entries(SORT_MODES).filter(([, mode]) => hasPrices || !mode.byPrice)
+
   const found = CATALOG.filter((i) => {
     if (cat && i.category !== cat) return false
     if (brand && !matchesFeature(i, brand)) return false
+    if (form && !matchesFeature(i, form)) return false
     if (feature && !matchesFeature(i, feature)) return false
     // цена не указана — позиция не проходит подбор по цене, иначе попала бы в «до 20 000»
     const value = priceValue(i.price)
@@ -76,7 +87,10 @@ export default function Catalog() {
   const items = SORT_MODES[sort].apply(found)
 
   const active = CATEGORIES.find((c) => c.slug === cat)
-  const extra = brand || feature || (price && PRICE_TIERS[price] ? PRICE_TIERS[price].label : null)
+  const extra = brand
+    || (form && filterLabel('form', form))
+    || (feature && filterLabel('feature', feature))
+    || (price && PRICE_TIERS[price] ? PRICE_TIERS[price].label : null)
 
   /* Меняем один параметр в адресе, остальные не трогаем; страница сбрасывается на первую */
   const setParam = (key, value) => {
@@ -107,11 +121,11 @@ export default function Catalog() {
 
   return (
     <>
-      <Seo title={"Слуховые аппараты"} description={"Заушные, внутриушные и внутриканальные слуховые аппараты. Подбор сурдолога после теста слуха."} path={"/catalog"} />
+      <Seo title={"Слуховые аппараты"} description={"Слуховые аппараты ReSound и Исток-Аудио: заушные, с ресивером в ухе и внутриушные. Подбор сурдолога после теста слуха."} path={"/catalog"} />
       <PageHero
         crumbs={[{ label: active ? active.title : extra || 'Каталог' }]}
         eyebrow="Каталог"
-        title={query ? `Поиск: ${query}` : active ? active.title : extra || 'Слуховые аппараты'}
+        title={query ? `Поиск: ${query}` : active ? active.heading || active.title : extra || 'Слуховые аппараты'}
       />
 
       <section className="section section--tight" style={{ paddingTop: 32 }}>
@@ -125,7 +139,7 @@ export default function Catalog() {
             <div className="filters__body">
 
             <div className="filters__group">
-              <h4>Тип аппарата</h4>
+              <h4>Производитель</h4>
               <ul className="filters__list">
                 {CATEGORIES.map((c) => (
                   <li key={c.slug}>
@@ -139,7 +153,7 @@ export default function Catalog() {
               </ul>
             </div>
 
-            <div className="filters__group">
+            {hasPrices && <div className="filters__group">
               <h4>Цена, ₽</h4>
               <div className="filters__price">
                 <input
@@ -156,17 +170,24 @@ export default function Catalog() {
                   onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
                 />
               </div>
-            </div>
+            </div>}
 
+            {/* Тип корпуса и особенности: выбор сразу сужает список, второй щелчок по
+                отмеченному пункту снимает фильтр */}
             {FILTERS.map((f) => (
-              <div className="filters__group" key={f.title}>
+              <div className="filters__group" key={f.param}>
                 <h4>{f.title}</h4>
                 <ul className="filters__list">
-                  {f.options.map((o, i) => (
-                    <li key={i}>
+                  {f.options.map((o) => (
+                    <li key={o.value}>
                       <label>
-                        <input type="checkbox" />
-                        <span>{o}</span>
+                        <input
+                          type="checkbox"
+                          checked={params.get(f.param) === o.value}
+                          onChange={(e) => setParam(f.param, e.target.checked ? o.value : null)}
+                        />
+                        <span>{o.label}</span>
+                        <small>{CATALOG.filter((i) => matchesFeature(i, o.value)).length}</small>
                       </label>
                     </li>
                   ))}
@@ -190,7 +211,7 @@ export default function Catalog() {
               <label className="catalog__sort">
                 Сортировка
                 <select value={sort} onChange={(e) => setParam('sort', e.target.value === 'popular' ? null : e.target.value)}>
-                  {Object.entries(SORT_MODES).map(([key, mode]) => (
+                  {sortModes.map(([key, mode]) => (
                     <option key={key} value={key}>{mode.label}</option>
                   ))}
                 </select>
@@ -243,7 +264,7 @@ export default function Catalog() {
 
             <div className="seo-note">
               <h2>Как выбрать слуховой аппарат</h2>
-              <p>Тип аппарата зависит от степени снижения слуха: при тяжёлой потере нужен заушный с запасом мощности, при лёгкой и средней подойдёт внутриушной или внутриканальный. Число каналов отвечает за то, насколько точно аппарат подстроится под вашу аудиограмму.</p>
+              <p>Тип аппарата зависит от степени снижения слуха: при тяжёлой потере нужен заушный с запасом мощности, при лёгкой и средней подойдёт модель с ресивером в ухе или внутриушная. Число каналов отвечает за то, насколько точно аппарат подстроится под вашу аудиограмму.</p>
               <p>Цена складывается из класса обработки звука, количества программ и дополнительных функций — Bluetooth, аккумулятора, шумоподавления. Разницу проще услышать на примерке, чем понять по характеристикам.</p>
             </div>
           </div>

@@ -1,11 +1,18 @@
 import { test, expect } from '@playwright/test'
 import { readdirSync, statSync } from 'node:fs'
-import { CATALOG, CATEGORIES, NEWS, PROMOS, SLIDES } from '../src/data/site.js'
+import { BRANDS, CATALOG, CATEGORIES, FILTERS, NEWS, PROMOS, SITE, SLIDES } from '../src/data/site.js'
+import { priceValue } from '../src/lib/price.js'
 
 /* Проверки основных сценариев. Запуск: npm test
    Тесты идут по собранной версии (npm run preview), как её видит посетитель.
    Количество слайдов, акций и товаров берём из данных: центр их меняет,
    и проверка не должна ломаться от каждой новой акции. */
+
+// модель, по которой проверяем карточку товара: первая в каталоге (центр ставит туда главную)
+const MODEL = CATALOG[0]
+// цены центр назначит позже — пока их нет, подбор по цене на сайте спрятан
+const HAS_PRICES = CATALOG.some((i) => priceValue(i.price) > 0)
+const hay = (i) => [i.title, i.short, ...Object.values(i.attrs || {}), ...(i.points || []), ...(i.specs || []).map((s) => `${s.k} — ${s.v}`)].join(' ').toLowerCase()
 
 test.describe('Главная', () => {
   test('открывается сверху и показывает первый экран', async ({ page }) => {
@@ -44,7 +51,7 @@ test.describe('Главная', () => {
     await expect(page.locator('.offer')).toHaveCount(3)
     await expect(page.locator('.promo')).toHaveCount(3)
     await expect(page.locator('.picker .chip').first()).toBeVisible()
-    await expect(page.locator('.brands__logo')).toHaveCount(6)
+    await expect(page.locator('.brands__logo')).toHaveCount(BRANDS.length)
     await expect(page.locator('.ftr__col')).toHaveCount(4)
     // акции идут раньше подбора — так попросил центр
     const promoTop = (await page.locator('.promo').first().boundingBox()).y
@@ -89,12 +96,25 @@ test.describe('Каталог', () => {
     await expect(page.locator('.pcard').first()).toBeVisible()
   })
 
-  test('подбор по типу сужает выдачу', async ({ page }) => {
+  test('подбор по производителю сужает выдачу', async ({ page }) => {
+    const cat = CATEGORIES[CATEGORIES.length - 1]
     await page.goto('/catalog')
-    const all = await page.locator('.pcard').count()
-    await page.locator('.filters__list label', { hasText: 'Услуги центра' }).click()
-    await expect(page).toHaveURL(/cat=services/)
-    expect(await page.locator('.pcard').count()).toBeLessThanOrEqual(all)
+    await page.locator('.filters__list label', { hasText: cat.title }).click()
+    await expect(page).toHaveURL(new RegExp(`cat=${cat.slug}`))
+    await expect(page.locator('.catalog__bar strong')).toHaveText(String(CATALOG.filter((i) => i.category === cat.slug).length))
+  })
+
+  test('тип корпуса и особенности отбирают модели по характеристикам', async ({ page }) => {
+    for (const f of FILTERS) {
+      const o = f.options[0]
+      await page.goto('/catalog')
+      await page.locator('.filters__group', { hasText: f.title }).locator('label', { hasText: o.label }).click()
+      await expect(page).toHaveURL(new RegExp(`${f.param}=`))
+      await expect(page.locator('h1')).toHaveText(o.label)
+      const expected = CATALOG.filter((i) => hay(i).includes(o.value.toLowerCase())).length
+      expect(expected, o.label).toBeGreaterThan(0)
+      await expect(page.locator('.catalog__bar strong')).toHaveText(String(expected))
+    }
   })
 
   test('список к примерке пополняется', async ({ page }) => {
@@ -118,24 +138,35 @@ test.describe('Каталог', () => {
 })
 
 test.describe('Карточка товара', () => {
-  test('гарантия берётся из характеристик, у аксессуаров условий приёма нет', async ({ page }) => {
-    await page.goto('/catalog/resound-match-ma2t70')
-    await expect(page.locator('.prod__meta')).toContainText('1 год')
+  test('у аппарата есть условия приёма, а пустых строк «нет данных» нет', async ({ page }) => {
+    // берём модель, у которой производитель сообщает не все пять полей
+    const partial = CATALOG.find((i) => Object.keys(i.attrs).length < 5)
+    await page.goto(`/catalog/${partial.slug}`)
+    await expect(page.locator('.prod__meta')).toContainText('Выезд на дом')
+    await expect(page.locator('.prod__points')).not.toContainText('нет данных')
     await expect(page.locator('.prod__sku')).not.toContainText('Артикул')
-    await page.goto('/catalog/batareyki-power-one')
-    await expect(page.locator('.prod__meta')).toHaveCount(0)
+  })
+
+  test('снятая с производства модель помечена «под заказ»', async ({ page }) => {
+    const ordered = CATALOG.find((i) => i.stock === 'pod_zakaz')
+    await page.goto(`/catalog/${ordered.slug}`)
+    await expect(page.locator('.prod__sku')).toContainText('под заказ')
+    // на карточке в каталоге — та же метка; по 6 моделей на странице
+    const pageNo = Math.floor(CATALOG.indexOf(ordered) / 6) + 1
+    await page.goto(pageNo > 1 ? `/catalog?page=${pageNo}` : '/catalog')
+    await expect(page.locator('.pcard', { hasText: ordered.title }).locator('.pcard__tag--pod_zakaz')).toHaveText('Под заказ')
   })
 
   test('заявка с карточки помнит, какой аппарат выбран', async ({ page }) => {
     await page.route('**/items/zayavki', (route) => route.abort())
-    await page.goto('/catalog/signia-motion-2px')
+    await page.goto(`/catalog/${MODEL.slug}`)
     await page.locator('.prod__actions .btn-primary').click()
     const modal = page.locator('.modal')
     await modal.locator('input[name="name"]').fill('Анна')
     await modal.locator('input[name="phone"]').type('9138217347')
     await modal.locator('input[type="checkbox"]').check()
     await modal.locator('button[type="submit"]').click()
-    await expect(modal.locator('.rform__preview')).toContainText('Интересует: Signia Motion 2px')
+    await expect(modal.locator('.rform__preview')).toContainText(`Интересует: ${MODEL.title}`)
   })
 })
 
@@ -238,14 +269,24 @@ test.describe('Форма записи', () => {
 test.describe('Поиск и подбор', () => {
   test('поиск в шапке находит модель', async ({ page }) => {
     await page.goto('/')
-    await page.locator('.hdr__search input').fill('phonak')
+    await page.locator('.hdr__search input').fill('руна')
     await page.locator('.hdr__search input').press('Enter')
-    await expect(page).toHaveURL(/q=phonak/)
+    await expect(page).toHaveURL(/q=/)
     // адрес меняется раньше, чем перерисуется список, — ждём именно выдачу
     await expect.poll(async () => {
       const titles = await page.locator('.pcard h3').allTextContents()
-      return titles.length > 0 && titles.every((t) => /phonak/i.test(t))
+      return titles.length > 0 && titles.every((t) => /руна/i.test(t))
     }, { timeout: 10000 }).toBe(true)
+  })
+
+  test('пока цен нет, подбор и сортировка по цене не показываются', async ({ page }) => {
+    test.skip(HAS_PRICES, 'у моделей уже есть цены — работают проверки ниже')
+    await page.goto('/catalog')
+    await expect(page.locator('.filters__price')).toHaveCount(0)
+    expect(await page.locator('.catalog__sort option').allTextContents()).not.toContain('Сначала дешевле')
+    await expect(page.locator('.pcard__price strong').first()).toHaveText('Цена по запросу')
+    // в меню каталога нет колонки «Стоимость»: её ссылки вели бы в пустой список
+    await expect(page.locator('.megamenu__col h4', { hasText: 'Стоимость' })).toHaveCount(0)
   })
 
   /* У позиций без цены стоит «Цена по запросу» — в сравнении сумм они не участвуют */
@@ -254,12 +295,14 @@ test.describe('Поиск и подбор', () => {
     .map((t) => Number(t.replace(/\D/g, '')))
 
   test('сортировка меняет порядок', async ({ page }) => {
+    test.skip(!HAS_PRICES, 'цен пока нет — сортировка по цене спрятана')
     await page.goto('/catalog?sort=cheap')
     const prices = await sums(page)
     expect(prices.every((n, i) => i === 0 || prices[i - 1] <= n)).toBe(true)
   })
 
   test('фильтр по цене отсекает дешёвые модели и позиции без цены', async ({ page }) => {
+    test.skip(!HAS_PRICES, 'цен пока нет — подбор по цене спрятан')
     await page.goto('/catalog')
     const from = page.locator('.filters__price input').first()
     await from.fill('50000')
@@ -302,8 +345,17 @@ test.describe('Карта и адреса', () => {
   test('карта подключается с координатами центра', async ({ page }) => {
     await page.goto('/contacts')
     await page.locator('.ymap').scrollIntoViewIfNeeded()
-    await expect(page.locator('.ymap iframe')).toHaveAttribute('src', /38\.975313/)
+    const [lat, lon] = SITE.coords
+    await expect(page.locator('.ymap iframe')).toHaveAttribute('src', new RegExp(`ll=${lon},${lat}`.replace(/\./g, '\\.')))
     await expect(page.locator('.ymap__hit')).toHaveAttribute('href', /yandex\.ru\/maps/)
+  })
+
+  test('на контактах — адрес, почта и график центра', async ({ page }) => {
+    await page.goto('/contacts')
+    await expect(page.locator('#main')).toContainText(SITE.address)
+    await expect(page.locator('#main')).toContainText(SITE.email)
+    await expect(page.locator('.sched')).toContainText('10:00 – 16:00')
+    await expect(page.locator('.sched')).toContainText('выходной')
   })
 
   test('карта разворачивается и закрывается', async ({ page }) => {
@@ -320,7 +372,7 @@ test.describe('Страницы и мета', () => {
   const pages = [
     ['/', 'Точка слуха'],
     ['/catalog', 'Слуховые аппараты'],
-    ['/catalog/signia-motion-2px', 'Signia Motion 2px'],
+    [`/catalog/${MODEL.slug}`, MODEL.title],
     ['/promo', 'Акции'],
     ['/locations', 'Адреса центров'],
     ['/news', 'Новости'],
@@ -340,9 +392,9 @@ test.describe('Страницы и мета', () => {
   }
 
   test('адрес страницы в превью — этого сайта, а не прежнего', async ({ page }) => {
-    await page.goto('/catalog/signia-motion-2px')
+    await page.goto(`/catalog/${MODEL.slug}`)
     const url = await page.locator('meta[property="og:url"]').getAttribute('content')
-    expect(url).toContain('/catalog/signia-motion-2px')
+    expect(url).toContain(`/catalog/${MODEL.slug}`)
     expect(url).not.toContain('froghoppingamongtulips')
   })
 
@@ -367,7 +419,7 @@ test.describe('Мобильная версия', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true })
 
   test('ничего не вылезает за экран', async ({ page }) => {
-    for (const path of ['/', '/catalog', '/catalog/signia-motion-2px', '/contacts', '/news']) {
+    for (const path of ['/', '/catalog', `/catalog/${MODEL.slug}`, '/contacts', '/news']) {
       await page.goto(path)
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
       expect(overflow, `горизонтальная прокрутка на ${path}`).toBe(0)
@@ -424,9 +476,9 @@ test.describe('Скорость и выдача', () => {
     const ctx = await browser.newContext({ javaScriptEnabled: false })
     const page = await ctx.newPage()
     // со слешем на конце: так адрес папки со страницей выглядит на хостинге
-    await page.goto('/catalog/signia-motion-2px/')
-    await expect(page).toHaveTitle(/Signia Motion 2px/)
-    await expect(page.locator('h1')).toContainText('Signia Motion 2px')
+    await page.goto(`/catalog/${MODEL.slug}/`)
+    await expect(page).toHaveTitle(new RegExp(MODEL.title))
+    await expect(page.locator('h1')).toContainText(MODEL.title)
     await page.goto('/about/')
     await expect(page.locator('#main')).toContainText('тест слуха')
     // блоки ниже первого экрана должны быть видны, а не прозрачны

@@ -34,7 +34,7 @@
 .ymap__hit { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; }
 .ymap__hint {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--coral-soft); color: var(--ink); font-weight: 700; font-size: 0.94rem;
+  background: var(--coral); color: #fff; font-weight: 700; font-size: 0.94rem;
   padding: 12px 20px; border-radius: 999px; box-shadow: var(--shadow);
   opacity: 0; transform: translateY(6px);
   transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
@@ -43,8 +43,10 @@
 /* карта не открылась — подсказка видна сразу, иначе блок кажется пустым */
 .ymap--failed .ymap__hint { opacity: 1; transform: none; }
 
+/* адрес — в левом верхнем углу: внизу слева у виджета Яндекса своя ссылка,
+   и плашка её перекрывала */
 .ymap__addr {
-  position: absolute; left: 14px; bottom: 14px; z-index: 3;
+  position: absolute; left: 14px; top: 14px; z-index: 3;
   display: inline-flex; align-items: center; gap: 8px; max-width: calc(100% - 90px);
   background: #fff; color: var(--ink); font-size: 0.85rem; font-weight: 600;
   padding: 9px 14px; border-radius: 999px; box-shadow: var(--shadow-sm);
@@ -90,7 +92,7 @@
 @media (max-width: 620px) {
   /* на телефоне подсказку показываем сразу — наведения нет */
   .ymap__hint { opacity: 1; transform: none; font-size: 0.88rem; padding: 10px 16px; }
-  .ymap__addr { font-size: 0.78rem; padding: 7px 11px; left: 10px; bottom: 10px; }
+  .ymap__addr { font-size: 0.78rem; padding: 7px 11px; left: 10px; top: 10px; }
   .ymap__zoom { width: 40px; height: 40px; right: 10px; bottom: 10px; }
   .ymap-full { padding: 10px; }
   .ymap-full__box { height: 86vh; }

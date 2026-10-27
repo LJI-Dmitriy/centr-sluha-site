@@ -97,6 +97,8 @@
 .prod__thumb.is-active { border-color: var(--teal-700); }
 
 .prod__info h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-family: var(--font-display); font-weight: 800; margin: 14px 0 12px; }
+/* метка модели — как на карточке каталога: белым по бирюзе, оранжевым по мятному не читается */
+.prod__info .tag--accent { color: #fff; background: var(--teal-700); }
 .prod__sku { color: var(--muted); font-size: 0.9rem; }
 .prod__sku strong { color: var(--ink); }
 .prod__short { color: var(--muted); font-size: 1.05rem; margin: 16px 0 24px; }

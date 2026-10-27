@@ -25,6 +25,9 @@ const server = await preview({ preview: { port: 4179, strictPort: true } })
 const origin = server.resolvedUrls.local[0].replace(/\/$/, '')
 const browser = await chromium.launch()
 const page = await browser.newPage()
+// карта Яндекса для готового HTML не нужна, а её виджет всё время что-то догружает,
+// и страница с картой не дожидалась конца загрузки — сборка падала по таймауту
+await page.route(/yandex|yastatic/, (r) => r.abort())
 
 for (const route of routes) {
   const url = origin + route

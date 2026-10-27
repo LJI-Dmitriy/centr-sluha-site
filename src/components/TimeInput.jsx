@@ -11,9 +11,10 @@ import './TimeInput.css'
 
 const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'))    // 00…23
 const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))  // 00…59
-const OPEN_FROM = 9
-const OPEN_TO = 20
-const START = '09'   // с чего открывается барабан, если время ещё не выбрали
+// часы приёма в будни; в субботу центр работает до 16:00 — это сказано в подсказке
+const OPEN_FROM = 10
+const OPEN_TO = 18
+const START = '10'   // с чего открывается барабан, если время ещё не выбрали
 
 export default function TimeInput({ name = 'time', required = false, id }) {
   const [open, setOpen] = useState(false)
@@ -73,7 +74,7 @@ export default function TimeInput({ name = 'time', required = false, id }) {
           </div>
           <div className="timepick__foot">
             <span className={outside ? 'timepick__warn' : ''}>
-              {outside ? 'центр в это время закрыт' : 'приём с 9:00 до 20:00'}
+              {outside ? 'центр в это время закрыт' : 'приём с 10:00 до 18:00, в субботу до 16:00'}
             </span>
             <button type="button" className="btn btn-primary btn-sm" onClick={confirm}>
               Готово

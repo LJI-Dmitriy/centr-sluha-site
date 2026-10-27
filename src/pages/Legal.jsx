@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import Icon from '../components/Icon'
 import Seo from '../components/Seo'
-import { LEGAL } from '../data/site'
+import { LEGAL } from '../data/legal'
 import './Pages.css'
 
 /* Служебные страницы: политика конфиденциальности и согласие на обработку данных */
