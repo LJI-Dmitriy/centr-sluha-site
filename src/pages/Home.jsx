@@ -7,6 +7,7 @@ import ProductCard from '../components/ProductCard'
 import Ph from '../components/Ph'
 import Messengers from '../components/Messengers'
 import RequestForm from '../components/RequestForm'
+import ReviewButton from '../components/ReviewButton'
 import Seo from '../components/Seo'
 import { useRequestForm } from '../components/RequestModal'
 import { useContent } from '../components/ContentContext'
@@ -185,6 +186,20 @@ export default function Home() {
               <MapEmbed coords={main.coords} address={main.address} className="ph--flat" />
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* ОТЗЫВЫ — в самом низу, перед подвалом, как просил центр */}
+      <section className="section">
+        <div className="container">
+          <Reveal className="band">
+            <div>
+              <span className="eyebrow">Отзывы</span>
+              <h2 style={{ margin: '14px 0 8px' }}>Были у нас? Оставьте отзыв</h2>
+              <p className="lead">Расскажите, как прошёл приём и подошёл ли аппарат — нам важно ваше мнение.</p>
+            </div>
+            <ReviewButton />
+          </Reveal>
         </div>
       </section>
     </>

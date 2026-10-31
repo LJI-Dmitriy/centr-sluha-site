@@ -7,7 +7,8 @@ import { VISIT_GOALS } from '../data/site'
 import { panelEnabled, sendRequest } from '../lib/panel'
 import './RequestForm.css'
 
-/* Три типа форм: запись на приём, вопрос специалисту, обратный звонок */
+/* Типы форм: запись на приём, вопрос специалисту, обратный звонок — они же вкладки
+   на странице «Контакты» — и отзыв, который открывается кнопкой «Оставить отзыв» */
 export const FORM_VARIANTS = {
   visit: {
     key: 'visit',
@@ -30,6 +31,18 @@ export const FORM_VARIANTS = {
     text: 'Оставьте имя и телефон — перезвоним',
     submit: 'Жду звонка',
   },
+  // без tab — во вкладках «Контактов» отзыва нет
+  review: {
+    key: 'review',
+    eyebrow: 'Отзыв',
+    title: 'Оставить отзыв',
+    text: 'Расскажите, как прошёл приём и подошёл ли аппарат. Отзыв прочитает руководитель центра.',
+    submit: 'Отправить отзыв',
+    mailSubject: 'Отзыв с сайта',
+    doneTitle: 'Спасибо за отзыв',
+    doneText: 'Мы прочитаем его и, если понадобится, перезвоним.',
+    readyTitle: 'Отзыв готов',
+  },
 }
 
 function Field({ label, children }) {
@@ -41,7 +54,7 @@ const LABELS = {
   message: 'Комментарий',
 }
 
-const REQUEST_TYPE = { visit: 'zapis', ask: 'vopros', call: 'zvonok' }
+const REQUEST_TYPE = { visit: 'zapis', ask: 'vopros', call: 'zvonok', review: 'otzyv' }
 
 export default function RequestForm({ variant = 'visit', subject: rawSubject, id, items }) {
   const { SITE } = useContent()
@@ -63,10 +76,11 @@ export default function RequestForm({ variant = 'visit', subject: rawSubject, id
     const data = new FormData(e.currentTarget)
     const values = Object.fromEntries([...data.entries()].filter(([, val]) => String(val).trim()))
 
-    const lines = [`Заявка с сайта: ${v.title.toLowerCase()}`]
+    const lines = [v.mailSubject || `Заявка с сайта: ${v.title.toLowerCase()}`]
     if (topic) lines.push(`Интересует: ${topic}`)
     for (const [key, value] of Object.entries(values)) {
-      if (LABELS[key]) lines.push(`${LABELS[key]}: ${value}`)
+      const label = key === 'message' && variant === 'review' ? 'Отзыв' : LABELS[key]
+      if (label) lines.push(`${label}: ${value}`)
     }
     if (items) lines.push(`Выбрано: ${items}`)
     const text = lines.join('\n')
@@ -102,8 +116,8 @@ export default function RequestForm({ variant = 'visit', subject: rawSubject, id
     return (
       <div className="rform rform--done">
         <span className="rform__check"><Icon name="check" size={30} /></span>
-        <h3>Заявка принята</h3>
-        <p>Перезвоним в рабочее время и подтвердим детали. Если нужно срочно — звоните: {SITE.phone}.</p>
+        <h3>{v.doneTitle || 'Заявка принята'}</h3>
+        <p>{v.doneText || `Перезвоним в рабочее время и подтвердим детали. Если нужно срочно — звоните: ${SITE.phone}.`}</p>
         <div className="rform__send">
           <a className="btn btn-ghost" href={SITE.phoneHref}><Icon name="phone" size={18} /> {SITE.phone}</a>
         </div>
@@ -116,7 +130,7 @@ export default function RequestForm({ variant = 'visit', subject: rawSubject, id
     return (
       <div className="rform rform--done">
         <span className="rform__check"><Icon name="check" size={30} /></span>
-        <h3>Заявка готова</h3>
+        <h3>{v.readyTitle || 'Заявка готова'}</h3>
         <p>Отправьте её удобным способом — ответим в рабочее время. Или просто позвоните.</p>
         <div className="rform__send">
           <a className="btn btn-primary" href={SITE.phoneHref}>
@@ -154,8 +168,8 @@ export default function RequestForm({ variant = 'visit', subject: rawSubject, id
       )}
 
       {variant !== 'call' && (
-        <Field label={variant === 'ask' ? 'Вопрос' : 'Комментарий'}>
-          <textarea name="message" rows={variant === 'ask' ? 5 : 3} />
+        <Field label={variant === 'ask' ? 'Вопрос' : variant === 'review' ? 'Отзыв' : 'Комментарий'}>
+          <textarea name="message" rows={variant === 'visit' ? 3 : 5} required={variant === 'review'} />
         </Field>
       )}
 

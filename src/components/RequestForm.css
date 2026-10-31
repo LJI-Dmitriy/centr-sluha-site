@@ -69,5 +69,6 @@
   color: var(--muted); transition: background 0.25s, color 0.25s;
 }
 .form-tabs button.is-active { background: #fff; color: var(--teal-700); box-shadow: var(--shadow-sm); }
+.form-tabs button:not(.is-active):hover { background: var(--teal-300); color: var(--ink); }
 
 @media (max-width: 560px) { .rform__row { grid-template-columns: 1fr; } }

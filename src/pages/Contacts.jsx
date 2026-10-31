@@ -8,6 +8,7 @@ import Mail from '../components/Mail'
 import Messengers from '../components/Messengers'
 import Reveal from '../components/Reveal'
 import RequestForm, { FORM_VARIANTS } from '../components/RequestForm'
+import ReviewButton from '../components/ReviewButton'
 import { useRequestForm } from '../components/RequestModal'
 import { SCHEDULE } from '../data/site'
 import { useContent } from '../components/ContentContext'
@@ -113,14 +114,15 @@ export default function Contacts() {
             </div>
             <div className="req">
               <h3>Отзывы</h3>
-              <p>Собираем отзывы на Яндекс.Картах и 2ГИС — там их видно вместе с датой и профилем автора. Ссылки на карточки центра добавим, как только они появятся.</p>
+              <p>Были у нас? Расскажите, как прошёл приём и подошёл ли аппарат — нам важно ваше мнение.</p>
+              <ReviewButton className="btn btn-ghost btn-sm" />
             </div>
           </Reveal>
 
           <Reveal className="form-card" delay={100}>
             {/* Три формы из ТЗ: запись, вопрос, обратный звонок */}
             <div className="form-tabs" role="tablist" aria-label="Тип обращения">
-              {Object.values(FORM_VARIANTS).map((f) => (
+              {Object.values(FORM_VARIANTS).filter((f) => f.tab).map((f) => (
                 <button
                   key={f.key}
                   role="tab"

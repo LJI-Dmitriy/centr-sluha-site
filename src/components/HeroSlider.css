@@ -55,7 +55,7 @@
   background: var(--teal-700); color: #fff; box-shadow: var(--shadow-sm);
   transition: transform 0.2s var(--ease);
 }
-.hslider__arrow:hover { transform: translateY(-50%) scale(1.08); }
+.hslider__arrow:hover { background: var(--teal-300); color: var(--ink); transform: translateY(-50%) scale(1.08); }
 .hslider__arrow--prev { left: -62px; }
 .hslider__arrow--next { right: -62px; }
 

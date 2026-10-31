@@ -8,7 +8,7 @@
   border-radius: 50%; box-shadow: var(--shadow-sm);
   color: var(--teal-700); transition: background 0.25s, color 0.25s;
 }
-.sticky-actions button:hover, .sticky-actions a:hover { background: var(--teal-700); color: #fff; }
+.sticky-actions button:hover, .sticky-actions a:hover { background: var(--teal-300); color: var(--ink); }
 
 /* место под кнопку занято всегда — меняются только прозрачность и сдвиг */
 .sticky-actions__up {

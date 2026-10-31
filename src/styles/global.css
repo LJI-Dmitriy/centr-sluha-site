@@ -115,7 +115,12 @@ h3 { font-size: 1.25rem; }
 }
 /* кнопка записи — фирменным оранжевым везде, при наведении становится бирюзовой */
 .btn-primary { background: var(--coral); color: #fff; box-shadow: var(--shadow-sm); }
-.btn-primary:hover { background: var(--teal-700); transform: translateY(-2px); }
+/* при наведении — светлая бирюза из палитры, а не тёмная, как просил центр; текст на ней
+   тёмный — белый на светлом не читается. Только для мыши: на телефоне подсветка
+   «залипала» бы после нажатия */
+@media (hover: hover) {
+  .btn-primary:hover { background: var(--teal-300); color: var(--ink); transform: translateY(-2px); }
+}
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--gold); }
 .btn-ghost:hover { background: var(--sand); border-color: var(--gold); color: var(--teal-700); }
 .btn-light { background: #fff; color: var(--teal-700); }

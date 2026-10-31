@@ -59,7 +59,7 @@
   background: #fff; color: var(--teal-700); box-shadow: var(--shadow-sm);
   transition: background 0.2s, color 0.2s;
 }
-.ymap__zoom:hover { background: var(--teal-700); color: #fff; }
+.ymap__zoom:hover { background: var(--teal-300); color: var(--ink); }
 
 /* Развёрнутая карта */
 .ymap-full {

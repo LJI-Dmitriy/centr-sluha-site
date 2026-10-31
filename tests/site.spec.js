@@ -220,6 +220,33 @@ test.describe('Формы', () => {
 
 })
 
+test.describe('Отзывы', () => {
+  test('внизу главной можно оставить отзыв', async ({ page }) => {
+    await page.route('**/items/zayavki', (route) => route.abort())
+    await page.goto('/')
+    const band = page.locator('.band', { hasText: 'Оставьте отзыв' })
+    // блок — последний перед подвалом
+    await expect(page.locator('#main section').last()).toContainText('Оставьте отзыв')
+    await band.getByRole('button', { name: /Оставить отзыв/ }).click()
+    const modal = page.locator('.modal')
+    await expect(modal.locator('h3').first()).toHaveText('Оставить отзыв')
+    await modal.locator('input[name="name"]').fill('Мария')
+    await modal.locator('input[name="phone"]').type('9138217347')
+    await modal.locator('textarea[name="message"]').fill('Подобрали аппарат за один приём')
+    await modal.locator('input[type="checkbox"]').check()
+    await modal.locator('button[type="submit"]').click()
+    // без панели — готовый текст отзыва, чтобы отправить его письмом
+    await expect(modal.locator('.rform__preview')).toContainText('Отзыв с сайта')
+    await expect(modal.locator('.rform__preview')).toContainText('Отзыв: Подобрали аппарат')
+  })
+
+  test('во вкладках «Контактов» отзыва нет — только три формы', async ({ page }) => {
+    await page.goto('/contacts')
+    await expect(page.locator('.form-tabs [role="tab"]')).toHaveCount(3)
+    await expect(page.locator('.req', { hasText: 'Отзывы' }).getByRole('button', { name: /Оставить отзыв/ })).toBeVisible()
+  })
+})
+
 test.describe('Акции', () => {
   test('на главной три предложения и переход в раздел', async ({ page }) => {
     await page.goto('/')
